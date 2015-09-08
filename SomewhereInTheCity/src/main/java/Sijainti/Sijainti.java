@@ -11,4 +11,9 @@ package Sijainti;
  */
 public class Sijainti {
     
+    private static String sijainti;
+    
+    public static String paikanna() {
+        return sijainti;
+    }
 }
