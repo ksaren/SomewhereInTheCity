@@ -10,6 +10,11 @@ Ohjelman tällä kurssilla totetutettava versio tulee olemaan hyvin yksinkertais
 
 Ohjelman esimerkkinä toimii Helsingin Kahvikomppanian kahvimopo. Vastaavia ohjelmia on maailmalla käytössä (esim. Snaksy.com, osin FourSquare) mutta toistaiseksi mikään niistä ei toimi kunnolla Helsingissä.
 
+## Ohjelman kuvaus:
+
+Ohjelmaa voi käyttää asiakkaana tai toimijana. Kun ruokakärrytoimija saapuu myyntipaikalle ja on valmis avaamaan luukut, hän painaa napista joka automaattisesti päivittää kärryn sijainnin kartalle (ja päivittää tilan mahdollisen lisäviestin kera) ja ilmoitus kärrystä lähellä lähtee kanta-asiakkaille. Kun toimija lopettaa myynnin, hän painaa toista nappia, joka poistaa kärryn kartalta.
+Asiakkaat käyttävät ohjelmaa satunnaisasiakkaina tai kanta-asiakkaina. Satunnaisasiakas päivittää sijaintinsa kartalle ja saa tiedon lähellä olevista myyntikärryistä. Kanta-asiakkaan sijainti päivittyy automaattisesti ja hänelle tulee ilmoitus kun suosikiksi merkitty myyntikärry on saapunut lähelle.
+
 ## Käyttäjät:
 
 - Hyvästä ruuasta ja kahvista kiinnostuneet satunnaiset kaupunkilaiset ("Asiakkaat")
@@ -33,5 +38,12 @@ Ohjelman esimerkkinä toimii Helsingin Kahvikomppanian kahvimopo. Vastaavia ohje
 - Statuksen asettaminen (AUKI/KIINNI)
 - Promoviestit nähtäväksi kartalta
 
+## Sanastoa:
+- *Toimija*: StreetFood-toimija, joka vastaa myyntikärryn tietojen päivityksestä.
+- *Asiakas*: Palvelujen käyttäjä, jakautuu kahteen asiakastyyppiin
+    - *Satunnaisasiakas*: Hakee lähellä olevia kohteita ja paikantaa sijaintinsa manuaalisesti
+    - *Kantis*: Antaa luvan sijainnin seurantaan ja merkitsee suosikiksi joitain kohteita.
+- *Myyntikärry*: Ruoan tai kahvin myyntipaikka, josta tuotteen voi ostaa
+- *Suosikki*: Kantis voi merkitä tietyn toimijan suosikkilistalleen, jolloin sen saapuminen lähelle antaa kantikselle asiasta ilmoituksen.
 
 
