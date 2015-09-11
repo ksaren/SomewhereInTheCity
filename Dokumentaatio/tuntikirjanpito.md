@@ -22,6 +22,21 @@
 - Drawing Use Case Diagram
 - Starting the programming: generating packages, some classes
 
+**Sep 10, 2015**
+- Time: 3h
+- Programming
+
+**Sep 11, 2015**
+- Time: 5h
+- Starting with tests
+- Setting up another ssh key to Apple laptop (1h)
+- Drawing first Class diagrams
+
+**2nd Deadline**
+- Time spent 21h this far (+15h)
+
+
+
 
 
 
