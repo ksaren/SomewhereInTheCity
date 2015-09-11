@@ -2,18 +2,18 @@
 
 ## Aihe:
 
-Helsingin katuruokakulttuuri kukoistaa, ja tänä kesänä katukuvaan on ilmestynyt useita todella hyviä ruokarekkoja, -pyöriä ja -mopoja. Koska näillä ketterillä kärryillä on tapana liikkua paikasta toiseen, voi lempiruoan tai -kahvin saanti olla sattumankauppaa...
+**Helsingin** katuruokakulttuuri kukoistaa, ja tänä kesänä katukuvaan on ilmestynyt useita todella hyviä ruokarekkoja, -pyöriä ja -mopoja. Koska näillä **ketterillä kärryillä** on tapana liikkua paikasta toiseen, voi lempiruoan tai -kahvin saanti olla sattumankauppaa...
 
-Tähän tarkoitukseen aion toteuttaa ohjelman jolla asiakas voisi paikantaa kyseiset kärryt, ja lähelle saapuvista lempikojuista saisi halutessaan ilmoituksen.
+Tähän tarkoitukseen aion toteuttaa ohjelman jolla **asiakas** voisi paikantaa kyseiset kärryt, ja lähelle saapuvista **lempikojuista** saisi halutessaan **ilmoituksen**.
 
-Ohjelman tällä kurssilla totetutettava versio tulee olemaan hyvin yksinkertaistettu ja toimimaan ns. simulaattoritilassa.
+Ohjelman tällä kurssilla totetutettava versio tulee olemaan hyvin yksinkertaistettu ja toimimaan ns. **simulaattoritilassa**.
 
 Ohjelman esimerkkinä toimii Helsingin Kahvikomppanian kahvimopo. Vastaavia ohjelmia on maailmalla käytössä (esim. Snaksy.com, osin FourSquare) mutta toistaiseksi mikään niistä ei toimi kunnolla Helsingissä.
 
 ## Ohjelman kuvaus:
 
-Ohjelmaa voi käyttää asiakkaana tai toimijana. Kun ruokakärrytoimija saapuu myyntipaikalle ja on valmis avaamaan luukut, hän painaa napista joka automaattisesti päivittää kärryn sijainnin kartalle (ja päivittää tilan mahdollisen lisäviestin kera) ja ilmoitus kärrystä lähellä lähtee kanta-asiakkaille. Kun toimija lopettaa myynnin, hän painaa toista nappia, joka poistaa kärryn kartalta.
-Asiakkaat käyttävät ohjelmaa satunnaisasiakkaina tai kanta-asiakkaina. Satunnaisasiakas päivittää sijaintinsa kartalle ja saa tiedon lähellä olevista myyntikärryistä. Kanta-asiakkaan sijainti päivittyy automaattisesti ja hänelle tulee ilmoitus kun suosikiksi merkitty myyntikärry on saapunut lähelle.
+Ohjelmaa voi käyttää asiakkaana tai **toimijana**. Kun ruokakärrytoimija saapuu **myyntipaikalle** ja on valmis **avaamaan luukut**, hän painaa **napista** joka automaattisesti päivittää kärryn **sijainnin** **kartalle** (ja päivittää **tilan** mahdollisen **lisäviestin** kera) ja ilmoitus kärrystä lähellä lähtee **kanta-asiakkaille**. Kun toimija lopettaa myynnin, hän painaa **toista nappia**, joka poistaa kärryn kartalta.
+Asiakkaat käyttävät ohjelmaa **satunnaisasiakkaina** tai kanta-asiakkaina. Satunnaisasiakas päivittää sijaintinsa kartalle ja saa tiedon **lähellä olevista myyntikärryistä**. Kanta-asiakkaan sijainti päivittyy automaattisesti ja hänelle tulee ilmoitus kun **suosikiksi** merkitty myyntikärry on saapunut lähelle.
 
 ## Käyttäjät:
 

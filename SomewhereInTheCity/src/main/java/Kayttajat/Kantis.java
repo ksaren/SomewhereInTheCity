@@ -7,13 +7,12 @@ package Kayttajat;
 
 import java.util.*;
 
-/**
+/**Luokka johon tallennetaan kantisten tiedot ja heidän suosikkitoimijansa.
  *
  * @author kaisa
  */
 public class Kantis extends Asiakas {
     
-    private String nimi;
     private Set<Toimija> suosikit = new HashSet();
     
     public Kantis(String kokoNimi) {
@@ -35,4 +34,6 @@ public class Kantis extends Asiakas {
         }
         else return false;
     }
+    
+  
 }

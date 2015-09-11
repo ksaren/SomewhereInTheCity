@@ -5,14 +5,22 @@
  */
 package Kayttajat;
 
-/**Rajapinta ohjelman käyttäjille.
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
  *
  * @author kaisa
  */
-public interface Kayttaja {
+public class AsiakasTest {
     
-    public int getNro();
-    
-    public String getNimi();
+    private static Asiakas a;
+       
+    @Before
+    public void setUp() {
+        a = new Asiakas();
+    }
 
+    
 }

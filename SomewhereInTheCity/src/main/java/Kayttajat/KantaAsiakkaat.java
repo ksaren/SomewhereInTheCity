@@ -7,7 +7,7 @@ package Kayttajat;
 
 import java.util.*;
 
-/**
+/**Luokka Kanta-asiakkaiden varastointiin
  *
  * @author kaisa
  */

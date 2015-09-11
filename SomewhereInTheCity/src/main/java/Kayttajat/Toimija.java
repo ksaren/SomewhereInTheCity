@@ -15,21 +15,29 @@ import java.util.Set;
 public class Toimija implements Kayttaja {
 
     private static int uusinToimija = 1000;
-    private static Set<Toimija> toimijat = new HashSet();
+    static Set<Toimija> toimijat = new HashSet();
 
     private String karrynNimi;
     private int karryNro;
+    private String kuvaus;
 
+    //Luo uuden Toimijan, antaa nimeksi uusiToimija jos toimijan nimi on jo listalla.
+    //Lisää myös toimijan listalle 'toimijat'.
     public Toimija(String toimijanNimi) {
+        this.karrynNimi = toimijanNimi;
         for (Toimija t : toimijat) {
-            if (t.karrynNimi != toimijanNimi) {
-                this.karrynNimi = toimijanNimi;
-                if (toimijaListalle(this))
-                    System.out.println("Toimija lisatty.");
+            if (t.karrynNimi.equalsIgnoreCase(this.karrynNimi)) {
+                this.karrynNimi = "uusiToimija";
             }
         }
-    }
+            if (toimijaListalle(this)) {
+                System.out.println("Toimija lisatty.");
+                uusinToimija++;
+                this.karryNro = uusinToimija;
+            }
+        }
     
+
     public static boolean toimijaListalle(Toimija uusiKarry) {
         if (toimijat.add(uusiKarry)) {
             uusinToimija++;
@@ -38,7 +46,22 @@ public class Toimija implements Kayttaja {
             return false;
         }
     }
-    
-    
+
+    public static boolean poistaToimija(Toimija poistettava) {
+        if (toimijat.remove(poistettava)) {
+            System.out.println("Toimija " + poistettava + " poistettu");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String getNimi() {
+        return this.karrynNimi;
+    }
+
+    public int getNro() {
+        return this.karryNro;
+    }
 
 }

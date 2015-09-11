@@ -5,12 +5,20 @@
  */
 package Kayttajat;
 
-/**
+/** Yläluokka eri asiakastyypeille.
  *
  * @author kaisa
  */
 public class Asiakas implements Kayttaja {
     
-    private int AsNro;
+    int asNro;
+    String nimi;
     
+     public int getNro() {
+        return this.asNro;
+    }
+    
+    public String getNimi() {
+        return this.nimi;
+    }
 }

@@ -14,7 +14,6 @@ public class Syotteet {
 
     public static boolean testaaSyote(String testattava,
             String vaihtis1) {
-        testattava.toUpperCase();
         if (testattava.equals(vaihtis1)) {
             return true;
         } else {

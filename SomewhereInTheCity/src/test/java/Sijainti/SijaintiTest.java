@@ -3,16 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Kayttajat;
+package Sijainti;
 
-/**Rajapinta ohjelman käyttäjille.
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
  *
  * @author kaisa
  */
-public interface Kayttaja {
+public class SijaintiTest {
     
-    public int getNro();
+    public SijaintiTest() {
+    }
     
-    public String getNimi();
+    @Before
+    public void setUp() {
+    }
+    
 
+    
 }

@@ -11,6 +11,7 @@ package Kayttoliittyma;
  * @author kaisa
  */
 import static Logiikka.Syotteet.*;
+import Logiikka.Kirjautuminen.*;
 import static Sijainti.Sijainti.*;
 import java.util.*;
 
@@ -25,7 +26,7 @@ public class Valikko {
                 + "the city\" -projektia!");
         System.out.println("Valitse 'A' käyttääksesi ohjelmaa asiakkaana ja "
                 + "'Y' katuruokatoimijana: ");
-        valinta = sc.nextLine();
+        valinta = (sc.nextLine()).toUpperCase();
         if (testaaSyote(valinta, "Y", "A")) {
             if (valinta.equals("A")) {
                 asiakasNakyma();
@@ -39,7 +40,7 @@ public class Valikko {
         }
 
     }
-    
+
     public static void asiakasNakyma() {
         sc = new Scanner(System.in);
         System.out.println("Asiakasnäkymässä voit valita seuraavista "
@@ -49,19 +50,28 @@ public class Valikko {
         System.out.println("Kirjaudu (K)");
         valinta = (sc.nextLine()).toUpperCase();
         switch (valinta) {
-            case "P" : paikanna();  //Return sijainti!
-            case "S" : etsiToimijat();
-            case "K" : kirjaudu();
-            default : { System.out.println("Virheellinen valinta");
-                asiakasNakyma();}
-            
-            }
+            case "P":
+                System.out.println("Paikannustoimet...");
+                break; //paikanna();  Return sijainti!
+            case "S":
+                System.out.println("Metodi joka etsii toimijoita...");
+                break; //etsiToimijat();
+            case "K":
+                System.out.println("Kirjautumisolion luonti");
+                break; //kirjaudu();
+            default:
+                System.out.println("Virheellinen valinta, aloita alusta");
+                break;
         }
-    
-    
+
+    }
+
     public static void yrittajaNakyma() {
-        
-    } 
-    
-    
+        System.out.println("Tästä siirrytään yrittäjänäkymään");
+    }
+
+    public static void main(String[] args) {
+        paavalikko();
+    }
+
 }
