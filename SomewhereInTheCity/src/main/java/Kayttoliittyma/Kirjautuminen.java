@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logiikka;
+package Kayttoliittyma;
 
 /**
  *
@@ -11,11 +11,7 @@ package Logiikka;
  */
 public class Kirjautuminen {
     
-    public boolean kirjaudu() {
-        if (true) {
-            System.out.println("Tähän tulee kirjautumistoiminnot...");
-            return true;
-        }
-        else return false;
+    public void kirjaudu() {
+    
     }
 }

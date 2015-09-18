@@ -5,26 +5,15 @@
  */
 package Kayttajat;
 
+import java.io.*;
+import java.util.*;
 
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
-
-/**
+/**Luokka Asiakkaiden varastointiin Tämän luokan asiakkaat on tallennettuna oliotiedostoon.
  *
  * @author kaisa
  */
-public class KayttajaTest {
+public class Asiakkaat implements Serializable {
     
-    public KayttajaTest() {
-    }
-    
-    
-    @Before
-    public void setUp() {
-    }
-
-
- 
+    private static Set<Asiakas> asiakkaat = new HashSet();
     
 }

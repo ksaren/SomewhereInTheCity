@@ -5,10 +5,22 @@
  */
 package Logiikka;
 
+import Kayttajat.*;
+import Kayttoliittyma.*;
+
 /**
  *
  * @author kaisa
  */
 public class Istunto {
     
+    public void Istunto() {
+    }
+    
+    
+    public void lopeta() {
+        //suljetaan istunto
+        //tallennetaan asiakkaan suosikit oliotiedostoon
+        //tallennetaan käyttäjät oliotiedostoon
+    }
 }

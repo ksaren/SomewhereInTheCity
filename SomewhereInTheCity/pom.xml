@@ -57,10 +57,12 @@
                     <targetClasses>
                         <param>Kayttajat.*</param>
                         <param>Logiikka.*</param>
+                        <param>Sijainti.Kartta</param>
                     </targetClasses>
                     <targetTests>
                         <param>Kayttajat*</param>
                         <param>Logiikka.*</param>
+                        <param>Sijainti.Kartta</param>
                     </targetTests>
                 </configuration>
                 <version>1.1.4</version>

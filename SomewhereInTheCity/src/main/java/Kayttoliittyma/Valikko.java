@@ -11,7 +11,7 @@ package Kayttoliittyma;
  * @author kaisa
  */
 import static Logiikka.Syotteet.*;
-import Logiikka.Kirjautuminen.*;
+import Kayttoliittyma.Kirjautuminen.*;
 import static Sijainti.Sijainti.*;
 import java.util.*;
 
@@ -19,6 +19,8 @@ public class Valikko {
 
     private static String valinta;
     private static Scanner sc;
+    
+   
 
     public static void paavalikko() {
         sc = new Scanner(System.in);

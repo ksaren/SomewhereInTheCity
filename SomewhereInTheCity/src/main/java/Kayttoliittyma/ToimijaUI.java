@@ -11,4 +11,9 @@ package Kayttoliittyma;
  */
 public class ToimijaUI extends GUI {
     
+
+public ToimijaUI() {
+    
+}
+
 }

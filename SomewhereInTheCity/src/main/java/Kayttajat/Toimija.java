@@ -14,10 +14,11 @@ import java.util.Set;
  */
 public class Toimija implements Kayttaja {
 
-    private static int uusinToimija = 1000;
+    private static int uusinToimija = 1000; //alkuarvo, testailuvaiheessa!
     static Set<Toimija> toimijat = new HashSet();
 
     private String karrynNimi;
+    private String kayttajatunnus;
     private int karryNro;
     private String kuvaus;
 
@@ -56,6 +57,9 @@ public class Toimija implements Kayttaja {
         }
     }
 
+    public Toimija() {
+    }
+
     public String getNimi() {
         return this.karrynNimi;
     }
@@ -63,5 +67,10 @@ public class Toimija implements Kayttaja {
     public int getNro() {
         return this.karryNro;
     }
+    
+    public String getTunnus() {
+        return this.kayttajatunnus;
+    }
 
+    
 }

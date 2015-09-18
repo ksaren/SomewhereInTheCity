@@ -11,6 +11,8 @@ package Kayttajat;
  */
 public interface Kayttaja {
     
+    public String getTunnus();
+    
     public int getNro();
     
     public String getNimi();

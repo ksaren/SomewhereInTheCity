@@ -39,8 +39,8 @@ public class Kartta {
     
     public Kartta() {
         try{
-        URL oletusUrl = new URL(oletuskartta);
-        map = ImageIO.read(oletusUrl);
+        URL oletusUrl = new URL(this.oletuskartta);
+        this.map = ImageIO.read(oletusUrl);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,7 +54,7 @@ public class Kartta {
         }
     }
      
-    public Image tulostaKartta() {
+    public Image getKartta() {
         return this.map;        
     } 
     
@@ -76,10 +76,11 @@ public class Kartta {
     
     //Testataan että kartta toimii...
     public static void main(String[] args) {
-        Kartta testikartta = new Kartta("http://maps.google.com/maps/api/staticmap?center=Helsinki,Finland&zoom=15&size=1024x1024&maptype=roadmap");
+        //Kartta testikartta = new Kartta("http://maps.google.com/maps/api/staticmap?center=Helsinki,Finland&zoom=15&size=1024x1024&maptype=roadmap");
+        Kartta testikartta2 = new Kartta();
         JFrame frame = new JFrame();
         frame.setSize(600, 600);
-        JLabel label = new JLabel(new ImageIcon(testikartta.map));
+        JLabel label = new JLabel(new ImageIcon(testikartta2.map));
         frame.add(label);
         frame.setVisible(true);
     
