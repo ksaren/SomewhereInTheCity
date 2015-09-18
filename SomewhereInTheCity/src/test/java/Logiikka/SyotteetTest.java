@@ -5,6 +5,7 @@
  */
 package Logiikka;
 
+import static Logiikka.Syotteet.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -15,13 +16,27 @@ import static org.junit.Assert.*;
  */
 public class SyotteetTest {
     
-    public SyotteetTest() {
-    }
+    private static Syotteet s;
     
     
     @Before
     public void setUp() {
+        s = new Syotteet();
+        
     }
     
+    @Test
+    public void testaaSyoteTest() {
+        assertEquals((testaaSyote("moi3","moi3")),true);
+    }
     
+    @Test
+    public void testaaSyoteNumeroilla() {
+        assertEquals((testaaSyote(3,5)),false);
+    }
+    
+    @Test
+    public void testaaSyoteVaihtoehdoilla() {
+        assertEquals((testaaSyote("moi","hei","moi")),true);
+    }
 }

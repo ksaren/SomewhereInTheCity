@@ -15,7 +15,7 @@ import java.util.Set;
 public class Toimija implements Kayttaja {
 
     private static int uusinToimija = 1000; //alkuarvo, testailuvaiheessa!
-    static Set<Toimija> toimijat = new HashSet();
+    private static Set<Toimija> toimijat = new HashSet(); //siirretään Toimijat-luokkaan
 
     private String karrynNimi;
     private String kayttajatunnus;

@@ -16,22 +16,28 @@ import static org.junit.Assert.*;
  */
 public class ToimijaTest {
 
-    private static Toimija t;
+    private static Toimija tm;
 
     @Test
     public void konstruktoriTest() {
-        t = new Toimija("testeri");
-        assertEquals("testeri",t.getNimi());
+        tm = new Toimija("testeri");
+        assertEquals("testeri",tm.getNimi());
     }
 
     @Before
     public void setUp() {
-        t = new Toimija("testiToimija");
+        tm = new Toimija("testiToimija");
     }
-
+    
+    @Test
+    public void toimijaOnJoListallaTest() {
+        toimijaListalle(tm);
+        assertEquals(toimijaListalle(tm), false);
+    }
+    
     @Test
     public void poistoOnnistuuTest() {
-        assertEquals(poistaToimija(t), true);
+        assertEquals(poistaToimija(tm), true);
     }
 
 }
