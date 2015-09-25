@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
  * @author kaisa
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SijaintiTest.class, KarttaTest.class})
+@Suite.SuiteClasses({KarttaTest.class,GoogleSijaintiTest.class})
 public class SijaintiSuite {
 
     @Before

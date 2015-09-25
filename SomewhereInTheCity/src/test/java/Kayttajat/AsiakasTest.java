@@ -5,6 +5,8 @@
  */
 package Kayttajat;
 
+import static Kayttajat.Asiakas.*;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -32,6 +34,10 @@ public class AsiakasTest {
         t = new Toimija("Helppo Hodari", "hh", "lallallaa", "lallallaa");
     }
 
+    @After
+    public void tearDown() throws Exception {
+    }
+
     @Test
     public void testSetSuosikki() {
         assertEquals(a.setSuosikki(t), true);
@@ -48,5 +54,14 @@ public class AsiakasTest {
         assertEquals(a.setSalasana("moi", "iom"), false);
 
     }
+
+    /**
+     * Test of asiakasListalle method, of class Asiakas.
+     */
+    @Test
+    public void testAsiakasListalle() {
+        assertEquals(asiakasListalle(a), true);
+    }
+
 
 }

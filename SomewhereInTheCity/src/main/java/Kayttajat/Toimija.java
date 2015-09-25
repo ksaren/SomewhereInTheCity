@@ -8,7 +8,7 @@ package Kayttajat;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
+/**Luokka ruokatoimijoiden tallennukseen.
  *
  * @author kaisa
  */

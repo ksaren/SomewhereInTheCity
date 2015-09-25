@@ -67,10 +67,15 @@
 - Changing The Kayttaja from interface->superclass 
 
 **Sep 25, 2015**
-- Time: 4h + 2h
+- Time: 4h + 3h
 - Cleaning up the project for DL4
 - Updating the class diagrams
 - Setting up the random coordinates -system (now it works :) )
-- Writing some tests
+- Writing some tests (and trying to get them work)
 - generating reports
+
+--------------------
+**4th Deadline**
+- Total time: **56h** this far (+16h)
+--------------------
 

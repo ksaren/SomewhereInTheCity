@@ -6,7 +6,7 @@
 package Kayttajat;
 
 /**
- * Rajapinta ohjelman käyttäjille.
+ * Yläluokka joka tarjoaa kaikille käyttäjille yhteiset toiminnot.
  *
  * @author kaisa
  */

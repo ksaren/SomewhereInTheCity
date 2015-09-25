@@ -8,7 +8,7 @@ package Kayttajat;
 import java.io.*;
 import java.util.*;
 
-/**Luokka Asiakkaiden varastointiin Tämän luokan asiakkaat on tallennettuna oliotiedostoon.
+/**Luokka Asiakkaiden varastointiin. Tämän luokan asiakkaat on tarkoitus tallentaa oliotiedostoon.
  *
  * @author kaisa
  */

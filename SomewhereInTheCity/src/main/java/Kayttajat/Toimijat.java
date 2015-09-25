@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Luokka Toimijoiden varastointiin Tämän luokan toimijat on tallennettuna
+ * Luokka Toimijoiden varastointiin. Tämän luokan toimijat on tarkoitus tallentaa
  * oliotiedostoon.
  *
  * @author kaisa

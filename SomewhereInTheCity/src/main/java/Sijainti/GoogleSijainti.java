@@ -34,19 +34,24 @@ public class GoogleSijainti {
     private HashMap<String, String> APIkeys = new HashMap();
 
     public GoogleSijainti() {
+        try {
         this.omaSijainti = new LatLng(0, 0);
         this.luoRandomSijainnit();
         this.arvoOmaSijainti();
+        } catch (Exception e) {
+            System.out.println("Poikkeus: " + e);
+        }
     }
 
     /**
      * asettaa sijainnin parametrien mukaan jos parametrit ok, muuten arpoo*
      */
     public GoogleSijainti(double lat, double lng) {
+        this.luoRandomSijainnit();
         if (!this.setSijainti(lat, lng)) {
             this.arvoOmaSijainti();
         }
-        this.luoRandomSijainnit();
+        
     }
 
     private void luoRandomSijainnit() {
@@ -75,8 +80,14 @@ public class GoogleSijainti {
         }
     }
 
-    public void setKey(String nimi, String avain) {
-        APIkeys.put(nimi, avain);
+    /**Lisää 40-merkkisen avaimen HashMapiin*/
+    public boolean setKey(String nimi, String avain) {
+        if (nimi != null && avain != null && avain.length() == 40) {
+            APIkeys.put(nimi, avain);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //tällä hetkellä toimiva API-avain
@@ -85,8 +96,8 @@ public class GoogleSijainti {
     }
 
     public boolean setSijainti(double lat, double lng) {
-        if (lat <= -180.00 && lat >= 180.00
-                && lng <= -180.00 && lng >= 180.00) {
+        if (lat >= -180.00 && lat <= 180.00
+                && lng >= -180.00 && lng <= 180.00) {
             this.omaSijainti.lat = lat;
             this.omaSijainti.lng = lng;
             paikannettu = true;
@@ -102,6 +113,10 @@ public class GoogleSijainti {
      */
     public boolean setSijainti() {
         return this.arvoOmaSijainti();
+    }
+
+    public boolean onkoPaikannettu() {
+        return paikannettu;
     }
 
     /**

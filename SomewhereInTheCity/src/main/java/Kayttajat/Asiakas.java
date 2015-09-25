@@ -9,7 +9,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Yläluokka eri asiakastyypeille.
+ * Määrittelee asiakkaan ja tarjoaa tarvittavat asiakkaan lisäominaisuudet, kuten suosikkien
+ * tallentamisen.
  *
  * @author kaisa
  */
@@ -24,7 +25,7 @@ public class Asiakas extends Kayttaja {
 
         if (asiakkaat.onkoNimiVapaa(this)) {
             try {
-                this.asiakasListalle(this);
+                asiakasListalle(this);
                 System.out.println("Asiakas lisatty.");//testaus
                 this.setNro(seuraavaKayttaja());
             } catch (Exception e) {
