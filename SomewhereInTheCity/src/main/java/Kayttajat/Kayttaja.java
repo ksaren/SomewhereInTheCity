@@ -5,16 +5,80 @@
  */
 package Kayttajat;
 
-/**Rajapinta ohjelman käyttäjille.
+/**
+ * Rajapinta ohjelman käyttäjille.
  *
  * @author kaisa
  */
-public interface Kayttaja {
+public class Kayttaja {
+
+    private static int seuraavaKayttaja = 1000; //alkuarvo, testailuvaiheessa!
+    private int kayttajaNro = -1;
+    private String kokoNimi;
+    private String kayttajatunnus;
+    private String salasana;
+
+
+    public Kayttaja(String nimi, String tunnus, String salasana, String uudSalasana) {
+        try {
+            this.setNimi(nimi);
+            this.setTunnus(tunnus);
+            this.setSalasana(salasana, uudSalasana);
+        } catch (Exception e) {
+            System.out.println("Jokin parametreista ei kelpaa.");
+        }
+
+    }
     
-    public String getTunnus();
+    public static int seuraavaKayttaja() {
+        return seuraavaKayttaja;
+    }
     
-    public int getNro();
+    public static void yksiKayttajaLisaa() {
+        seuraavaKayttaja++;
+    }
+
+    public boolean setNimi(String nimi) {
+        if (nimi.length() > 0) {
+            this.kokoNimi = nimi;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean setTunnus(String tunnus) {
+        if (tunnus.length() > 0) {
+            this.kayttajatunnus = tunnus;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean setSalasana(String salasana, String uudSalasana) {
+        if (salasana.equals(uudSalasana) && salasana.length() >= 6) {
+            this.salasana = salasana;
+            return true;
+        } else {
+            return false;
+        }
+    }
     
-    public String getNimi();
+    public void setNro(int nro) {
+        this.kayttajaNro = nro;
+    }
+
+     public int getNro() {
+        return this.kayttajaNro;
+    }
+
+    public String getNimi() {
+        return this.kokoNimi;
+    }
+
+    public String getTunnus() {
+        return this.kayttajatunnus;
+    }
 
 }

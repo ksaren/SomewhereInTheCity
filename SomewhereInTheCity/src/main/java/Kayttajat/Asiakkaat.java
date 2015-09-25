@@ -14,6 +14,30 @@ import java.util.*;
  */
 public class Asiakkaat implements Serializable {
     
-    private static Set<Asiakas> asiakkaat = new HashSet();
+    private Set<Asiakas> asiakkaat = new HashSet();
+    
+    public boolean onkoNimiVapaa(Asiakas testattava) {
+        boolean ok = true;
+        for (Asiakas a : asiakkaat) {
+            if (a.getNimi().equalsIgnoreCase(testattava.getNimi())) {
+                ok = false;
+                break;
+            }
+        }
+        return ok;
+    }
+    
+    public boolean lisaa(Asiakas a) {
+        //pitaiskö heittää oma poikkeus jos ei onnistu?
+        if(this.asiakkaat.add(a)) 
+            return true;
+        else return false;
+    }
+    
+    public boolean poista(Asiakas p) {
+        if(this.asiakkaat.remove(p))
+            return true;
+        else return false;
+    }
     
 }

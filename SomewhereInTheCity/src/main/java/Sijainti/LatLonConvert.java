@@ -103,6 +103,9 @@ import java.lang.Math;
  * 
 * --------------------------------------------------------------------------
  */
+
+//Tämä luokka otetaan mukaan jos sille on tarvetta. Huom. Luokkaa ei ole itse kirjoitettu. 
+
 public class LatLonConvert {
 
     // declare local variables used throughout the class

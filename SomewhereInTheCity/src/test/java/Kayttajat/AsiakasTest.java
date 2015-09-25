@@ -20,15 +20,16 @@ public class AsiakasTest {
 
     @Test
     public void konstruktoriToimii() {
-        a = new Asiakas("minavaan");
-        assertEquals("minavaan", a.getNimi());
+        a = new Asiakas("Mina Vaanikainen", "minavaan", "helppo", "helppo");
+        assertEquals("minavaan", a.getTunnus());
+        
     }
 
     @Before
     public void setUp() {
-        a = new Asiakas("testiasiakas");
-        b = new Asiakas("toinenAsiakas");
-        t = new Toimija("testitoimija");
+        a = new Asiakas("Teppo Testaaja", "tt", "123456", "123456");
+        b = new Asiakas("Kaisa Kahvikissa", "kk", "JAVACoffee", "LATTECoffee");
+        t = new Toimija("Helppo Hodari", "hh", "lallallaa", "lallallaa");
     }
 
     @Test

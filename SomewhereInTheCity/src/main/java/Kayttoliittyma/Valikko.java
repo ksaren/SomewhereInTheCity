@@ -6,7 +6,7 @@
 package Kayttoliittyma;
 
 /**
- * Tarjoaa työkaluja käyttäjän valintojen käsittelyyn
+ * Tarjoaa työkaluja käyttäjän valintojen käsittelyyn ainakin testailuvaiheessa
  *
  * @author kaisa
  */

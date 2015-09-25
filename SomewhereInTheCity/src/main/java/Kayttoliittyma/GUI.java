@@ -12,7 +12,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.image.*;
 
-/**
+/** Graafisen käyttöliittymän luokka.
  *
  * @author kaisa
  */
@@ -20,13 +20,13 @@ public class GUI extends JFrame implements ActionListener {
 
     private JButton kirjaudu;
     private JButton uusiKayttaja;
-    private Istunto istunto;
     private Kartta karttaKuva;
     private JLabel karttaKuvaLabel;
-    private JPanel apupaneeli;  //kirjautumistoimiin
-    private JButton apunappi;
-    private JLabel aputeksti;
-    private JTextField apuTekstikentta;
+    private JPanel kirjautumisPaneeli;  //kirjautumistoimiin
+    private JButton OKnappi;
+    private JLabel kirjAputeksti;
+    private JTextField kirjautumisTekstikentta;
+    private JButton testiNappi;
 
     public GUI() {
 
@@ -50,10 +50,12 @@ public class GUI extends JFrame implements ActionListener {
         karttaPaneeli.setSize(1200, 1200);
         karttaPaneeli.setBackground(Color.DARK_GRAY);
 
-        karttaKuva = new Kartta(); //oletuskartta keskusta-alueelta
+        karttaKuva = new Kartta();
         karttaKuvaLabel = new JLabel(new ImageIcon(karttaKuva.getKartta()), 10);
+        testiNappi = new JButton("päivitä");
 
         karttaPaneeli.add(karttaKuvaLabel, "West");
+        karttaPaneeli.add(testiNappi, "South");
 
         this.add(karttaPaneeli, "North");
 
@@ -70,41 +72,48 @@ public class GUI extends JFrame implements ActionListener {
         //tapahtumankuuntelijat
         kirjaudu.addActionListener(this);
         uusiKayttaja.addActionListener(this);
+        testiNappi.addActionListener(this);
 
     } //konstruktori
 
+    private void luoApupaneeli(int valinta) {
+        this.kirjautumisPaneeli = new JPanel(new FlowLayout());
+        kirjautumisPaneeli.setBackground(Color.DARK_GRAY);
+        OKnappi = new JButton("OK");
+        if (valinta == 1) {
+            kirjAputeksti = new JLabel("Käyttäjätunnus:");
+            kirjautumisTekstikentta = new JTextField(20);
+        } else if (valinta == 2) {
+            kirjAputeksti = new JLabel("Valitse käyttäjätunnus:");
+            kirjautumisTekstikentta = new JTextField(20);
+        }
+        kirjautumisPaneeli.add(kirjAputeksti);
+        kirjautumisPaneeli.add(kirjautumisTekstikentta);
+        kirjautumisPaneeli.add(OKnappi);
+        this.add(kirjautumisPaneeli, "East");
+
+        //...ja sitten salasana yms. 
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {    //mitä tehdään...
-        if (e.getActionCommand().equals("Kirjaudu")) {
-            this.luoApupaneeli(1);
-        } else if (e.getActionCommand().equals("Uusi Käyttäjä")) {
-            this.luoApupaneeli(2);
+        switch (e.getActionCommand()) {
+            case "Kirjaudu":
+                this.luoApupaneeli(1);
+                break;
+            case "Uusi käyttäjä":
+                this.luoApupaneeli(2);
+                break;
+            case "päivitä":
+                karttaKuva.paivitaKartta();
+                karttaKuvaLabel.setIcon(new ImageIcon(karttaKuva.getKartta()));
+                break;
+            case "OK":
+                
         }
+        revalidate();
         repaint();
 
-    }
-
-    private void luoApupaneeli(int valinta) {
-        this.apupaneeli = new JPanel(new FlowLayout());
-        apupaneeli.setBackground(Color.DARK_GRAY);
-        apunappi = new JButton("OK");
-        if (valinta == 1) {
-            aputeksti = new JLabel("Käyttäjätunnus:");
-            apuTekstikentta = new JTextField(20);
-            apupaneeli.add(aputeksti);
-            apupaneeli.add(apuTekstikentta);
-            this.add(apupaneeli, "East");
-
-            //...ja sitten salasana yms. 
-        } else if (valinta==2) {
-            aputeksti = new JLabel("Valitse käyttäjätunnus:");
-            apuTekstikentta = new JTextField(20);
-            apupaneeli.add(aputeksti);
-            apupaneeli.add(apuTekstikentta);
-            this.add(apupaneeli, "East");
-
-            //...ja sitten salasana yms. 
-        }
     }
 
     private static void gui() {

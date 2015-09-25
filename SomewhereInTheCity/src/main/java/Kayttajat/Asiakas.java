@@ -13,82 +13,54 @@ import java.util.Set;
  *
  * @author kaisa
  */
-public class Asiakas implements Kayttaja {
-
-    private int asNro = -1;
-    private String kokoNimi;
-    private String kayttajatunnus;
-    private String salasana;
+public class Asiakas extends Kayttaja {
 
     private Set<Toimija> suosikit = new HashSet();
 
-    public Asiakas(String nimi) {
-        try {
-            this.setNimi(nimi);
-            //this.asNro =       // <--muuta!
-        } catch (Exception e) {
-            System.out.println("Nimi ei kelpaa.");
-        }
-    }
+    private static Asiakkaat asiakkaat = new Asiakkaat();
 
     public Asiakas(String nimi, String tunnus, String salasana, String uudSalasana) {
-        try {
-            this.setNimi(nimi);
-            this.setTunnus(tunnus);
-            this.setSalasana(salasana, uudSalasana);
-             //this.asNro = 
-        } catch (Exception e) {
-            System.out.println("Jokin parametreista ei kelpaa.");
-        }
+        super(nimi, tunnus, salasana, uudSalasana);
 
-       
-    }
+        if (asiakkaat.onkoNimiVapaa(this)) {
+            try {
+                this.asiakasListalle(this);
+                System.out.println("Asiakas lisatty.");//testaus
+                this.setNro(seuraavaKayttaja());
+            } catch (Exception e) {
+                System.out.println("Asiakkaan lisäys ei onnistu.");
+            }
 
-    public boolean setSalasana(String salasana, String uudSalasana) {
-        if (salasana.equals(uudSalasana) && salasana.length() >= 6) {
-            this.salasana = salasana;
-            return true;
         } else {
-            return false;
+            //voisko tässä lähettää jonkun virheilmon ja vaatia uuden nimen..?
+            this.setNimi("Uusi Asiakas");
+            System.out.println("Nimi on jo listalla.");
         }
-    }
 
-    public boolean setNimi(String nimi) {
-        if (nimi.length() > 0) {
-            this.kokoNimi = nimi;
-            return true;
-        } else {
-            return false;
-        }
     }
-
-    public boolean setTunnus(String tunnus) {
-        if (tunnus.length() > 0) {
-            this.kayttajatunnus = tunnus;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    
     public boolean setSuosikki(Toimija lemppari) {
-        if (lemppari != null) {
-            this.suosikit.add(lemppari);
+        if (this.suosikit.add(lemppari) && lemppari!=null)
+            return true;
+        else return false;
+    }
+
+    public static boolean asiakasListalle(Asiakas uusiAsiakas) {
+        if (asiakkaat.lisaa(uusiAsiakas)) {
+            yksiKayttajaLisaa();
             return true;
         } else {
             return false;
         }
     }
 
-    public int getNro() {
-        return this.asNro;
+    public static boolean poistaAsiakas(Asiakas poistettava) {
+        if (asiakkaat.poista(poistettava)) {
+            System.out.println("Toimija " + poistettava + " poistettu");
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public String getNimi() {
-        return this.kokoNimi;
-    }
-
-    public String getTunnus() {
-        return this.kayttajatunnus;
-    }
 }

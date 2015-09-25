@@ -8,13 +8,16 @@ package Logiikka;
 import Kayttajat.*;
 import Kayttoliittyma.*;
 
-/**
+/**Main-luokka ohjelman suorittamiseen.
  *
  * @author kaisa
  */
-public class Istunto {
+public class Main {
     
-    public void Istunto() {
+    public Main() {
+        //luodaan uusi istunto
+        //noudetaan travittavat tiedot tiedostoista
+        //kutsutaan käyttöliittymää
     }
     
     
@@ -22,5 +25,9 @@ public class Istunto {
         //suljetaan istunto
         //tallennetaan asiakkaan suosikit oliotiedostoon
         //tallennetaan käyttäjät oliotiedostoon
+    }
+    
+    public static void main(String[] args) {
+        //Tästä se alkaa...
     }
 }

@@ -7,6 +7,7 @@ package Kayttajat;
 
 import static Kayttajat.Toimija.*;
 import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,13 +21,18 @@ public class ToimijaTest {
 
     @Test
     public void konstruktoriTest() {
-        tm = new Toimija("testeri");
-        assertEquals("testeri",tm.getNimi());
+        tm = new Toimija("Suvin Sumppila", "susu", "pannukuuma", "pannukuuma");
+        assertEquals("Suvin Sumppila",tm.getNimi());
     }
 
     @Before
     public void setUp() {
-        tm = new Toimija("testiToimija");
+        tm = new Toimija("Testaamo", "tm", "password", "password");
+    }
+    
+    @After
+    public void tearDown() {
+        poistaToimija(tm);
     }
     
     @Test
@@ -35,9 +41,5 @@ public class ToimijaTest {
         assertEquals(toimijaListalle(tm), false);
     }
     
-    @Test
-    public void poistoOnnistuuTest() {
-        assertEquals(poistaToimija(tm), true);
-    }
 
 }
