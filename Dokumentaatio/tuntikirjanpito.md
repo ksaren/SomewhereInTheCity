@@ -79,3 +79,21 @@
 - Total time: **56h** this far (+16h)
 --------------------
 
+**Oct 1, 2015**
+- Time: 6h
+- Working with Kayttajat-package
+- Trying to move the map image to BufferedImage - not yet ready!
+
+**Oct 2, 2015**
+- Time: 5h
+- Generating the new class "Kirjautuminen" for logging in and signing up
+- Cleaning a bit for DL5
+
+- Time: 1h
+- Drawing 2 sequence charts
+
+---------------------
+**5th Deadline**
+- Total time: **68h** this far (+12h)
+--------------------- 
+
