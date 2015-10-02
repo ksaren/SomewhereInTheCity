@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Määrittelee asiakkaan ja tarjoaa tarvittavat asiakkaan lisäominaisuudet, kuten suosikkien
- * tallentamisen.
+ * Määrittelee asiakkaan ja tarjoaa tarvittavat asiakkaan lisäominaisuudet,
+ * kuten suosikkien tallentamisen.
  *
  * @author kaisa
  */
@@ -22,8 +22,7 @@ public class Asiakas extends Kayttaja {
 
     public Asiakas(String nimi, String tunnus, String salasana, String uudSalasana) {
         super(nimi, tunnus, salasana, uudSalasana);
-
-        if (asiakkaat.onkoNimiVapaa(this)) {
+        if (asiakkaat.asiakasTunnusOlemassa(this.getTunnus()) == null) {
             try {
                 asiakasListalle(this);
                 System.out.println("Asiakas lisatty.");//testaus
@@ -39,11 +38,13 @@ public class Asiakas extends Kayttaja {
         }
 
     }
-    
+
     public boolean setSuosikki(Toimija lemppari) {
-        if (this.suosikit.add(lemppari) && lemppari!=null)
+        if (this.suosikit.add(lemppari) && lemppari != null) {
             return true;
-        else return false;
+        } else {
+            return false;
+        }
     }
 
     public static boolean asiakasListalle(Asiakas uusiAsiakas) {
@@ -62,6 +63,19 @@ public class Asiakas extends Kayttaja {
         } else {
             return false;
         }
+    }
+
+    public static boolean luoMalliAsiakkaat() {
+        boolean ok = true;
+        try {
+            Asiakas a1 = new Asiakas("Mina Vaanikainen", "minavaan", "helppo",
+                    "helppo");
+            Asiakas a2 = new Asiakas("Teppo Testaaja", "tt", "123456", "123456");
+            Asiakas a3 = new Asiakas("Kaisa Kahvikissa", "kk", "JAVACoffee", "JAVACoffee");
+        } catch (Exception e) {
+            ok = false;
+        }
+        return ok;
     }
 
 }

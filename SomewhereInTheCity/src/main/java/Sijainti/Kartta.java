@@ -6,15 +6,16 @@
 package Sijainti;
 
 import com.google.maps.model.LatLng;
+import java.awt.*;
 import java.io.File;
-
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -23,6 +24,7 @@ import javax.swing.JLabel;
 public class Kartta {
 
     private Image map = null;
+    private BufferedImage bufMap = null;
     private GoogleSijainti sijainti;
     private URL URLolio;
 
@@ -86,9 +88,10 @@ public class Kartta {
 
     public boolean paivitaKartta() {//Myöh. parametreilla
         try {
-            sijainti.setSijainti(); //testivaiheessa, myöh parametreilla!
+            sijainti.setSijainti(); //testivaiheessa arpoo, myöh parametreilla!
             URLolio = new URL(this.setURL(sijainti.getKoordinaatit()));
             this.map = ImageIO.read(URLolio);
+            this.bufMap = bufferiKuvaksi(map);
             this.setRajat();
             return true;
         } catch (IOException e) {
@@ -98,18 +101,36 @@ public class Kartta {
     }
 
     public boolean onkoKartalla(LatLng koordinaatit) {
-     if (koordinaatit.lat >= this.lansiraja
-     && koordinaatit.lat <= this.itaraja
-     && koordinaatit.lng <= this.pohjoisraja
-     && koordinaatit.lng >= this.etelaraja) {
-     return true;
-     } else {
-     return false;
-     }
-     }
-    public Image getKartta() {
-        return this.map;
+        if (koordinaatit.lat >= this.lansiraja
+                && koordinaatit.lat <= this.itaraja
+                && koordinaatit.lng <= this.pohjoisraja
+                && koordinaatit.lng >= this.etelaraja) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
+    public BufferedImage getKartta() {
+        return this.bufMap;
+    }
+
+    /**
+     * Metodi joka muuntaa Image-kuvan BufferedImage:ksi*
+     */
+    public static BufferedImage bufferiKuvaksi(Image kuva) {
+        BufferedImage bKuva = new BufferedImage(kuva.getWidth(null), kuva.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        //Luodaan kuvaa varten 2D-grafiikkaolio
+        Graphics2D bGr = bKuva.createGraphics();
+        //...ja piirretään siihen kuva
+        bGr.drawImage(kuva, 0, 0, null);
+        //siivotaan jäljet...
+        bGr.dispose();
+        return bKuva;
+    }
+    
+        
+
 
     //Testataan että kartta toimii...
     public static void main(String[] args) {
@@ -117,12 +138,20 @@ public class Kartta {
         //Kartta testikartta = new Kartta("http://maps.google.com/maps/api/staticmap?center=Helsinki,Finland&zoom=15&size=1024x1024&maptype=roadmap");
         Kartta testikartta2 = new Kartta();
         JFrame frame = new JFrame();
-        frame.setSize(600, 600);
-        JLabel label = new JLabel(new ImageIcon(testikartta2.map));
-        frame.add(label);
+        frame.setLayout(new BorderLayout());
+        frame.setSize(1200, 1200);
+        JPanel paneeli = new JPanel(new FlowLayout());
+        paneeli.setSize(1000,1000);
+       //paneeli.paintComponent(testikartta2.map.getGraphics());
+        paneeli.setVisible(true);
+        frame.add(paneeli);
         frame.setVisible(true);
+        frame.repaint();
+        frame.revalidate();
         System.out.println(testikartta2.paivitaKartta());
         
+        
+
     }
 
 }

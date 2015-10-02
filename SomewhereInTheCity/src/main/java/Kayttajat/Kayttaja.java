@@ -80,5 +80,9 @@ public class Kayttaja {
     public String getTunnus() {
         return this.kayttajatunnus;
     }
+    
+    public String getSalasana() {
+        return this.salasana;
+    }
 
 }

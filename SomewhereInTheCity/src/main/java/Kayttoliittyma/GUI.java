@@ -5,6 +5,8 @@
  */
 package Kayttoliittyma;
 
+import static Kayttajat.Asiakas.luoMalliAsiakkaat;
+import static Kayttajat.Toimija.luoMalliToimijat;
 import Logiikka.*;
 import Sijainti.Kartta;
 import java.awt.event.*;
@@ -12,7 +14,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.image.*;
 
-/** Graafisen käyttöliittymän luokka.
+/**
+ * Graafisen käyttöliittymän luokka.
  *
  * @author kaisa
  */
@@ -27,45 +30,40 @@ public class GUI extends JFrame implements ActionListener {
     private JLabel kirjAputeksti;
     private JTextField kirjautumisTekstikentta;
     private JButton testiNappi;
+    BufferedImage osImage = null;
+    Graphics gr = null;
+
+    private boolean kirjautumisenTila = false;
+
+    private KarttaPaneeli kp;
 
     public GUI() {
 
+        karttaKuva = new Kartta();
         this.setLayout(new BorderLayout());
 
-        JPanel karttaPaneeli = new JPanel() /*{
-                 @Override
-                 public void paintComponent(Graphics g) {
-                 super.paintComponent(g);
-
-                 g.drawImage(
-                 karttaKuva.tulostaKartta(), 0, 0, null
-                 );
-                 }
-
-                 ;
-                 }*/;
+        ///JPanel karttaPaneeli = new JPanel();
+        KarttaPaneeli kp = new KarttaPaneeli();
+        kp.setPreferredSize(); //asettaa kartan koon paneelin kooksi
 
         //karttapaneelin toiminnot
-        karttaPaneeli.setLayout(new BorderLayout());
-        karttaPaneeli.setSize(1200, 1200);
-        karttaPaneeli.setBackground(Color.DARK_GRAY);
-
-        karttaKuva = new Kartta();
-        karttaKuvaLabel = new JLabel(new ImageIcon(karttaKuva.getKartta()), 10);
-        testiNappi = new JButton("päivitä");
-
-        karttaPaneeli.add(karttaKuvaLabel, "West");
-        karttaPaneeli.add(testiNappi, "South");
-
-        this.add(karttaPaneeli, "North");
+        ///karttaPaneeli.setLayout(new BorderLayout());
+        /// karttaPaneeli.setSize(1200, 1200);
+        ///karttaPaneeli.setBackground(Color.DARK_GRAY);
+        ///karttaPaneeli.add(karttaKuvaLabel, "West");
+        ///
+        //this.add(karttaPaneeli, "North");
+        this.add(kp, "North");
 
         //tekstipaneelin toiminnot
         JPanel nappiPaneeli = new JPanel(new FlowLayout());
         nappiPaneeli.setBackground(Color.DARK_GRAY);
         uusiKayttaja = new JButton("Uusi käyttäjä");
         kirjaudu = new JButton("Kirjaudu");
+        testiNappi = new JButton("Päivitä");
         nappiPaneeli.add(kirjaudu);
         nappiPaneeli.add(uusiKayttaja);
+        nappiPaneeli.add(testiNappi, "South");
 
         this.add(nappiPaneeli, "Center");
 
@@ -73,10 +71,28 @@ public class GUI extends JFrame implements ActionListener {
         kirjaudu.addActionListener(this);
         uusiKayttaja.addActionListener(this);
         testiNappi.addActionListener(this);
-
     } //konstruktori
 
-    private void luoApupaneeli(int valinta) {
+    public class KarttaPaneeli extends JPanel {
+
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(karttaKuva.getKartta(), 0, 0, null);
+        }
+
+        ;
+
+        public void setPreferredSize() {
+            super.setPreferredSize(new Dimension(karttaKuva.getKartta()
+                    .getWidth(null), karttaKuva.getKartta().getHeight(null)));
+        }
+
+    ;
+
+    }
+
+    /*private void luoApupaneeli(int valinta) {
         this.kirjautumisPaneeli = new JPanel(new FlowLayout());
         kirjautumisPaneeli.setBackground(Color.DARK_GRAY);
         OKnappi = new JButton("OK");
@@ -92,24 +108,26 @@ public class GUI extends JFrame implements ActionListener {
         kirjautumisPaneeli.add(OKnappi);
         this.add(kirjautumisPaneeli, "East");
 
-        //...ja sitten salasana yms. 
-    }
-    
+        //...ja sitten salasana yms.
+    }*/
+
     @Override
-    public void actionPerformed(ActionEvent e) {    //mitä tehdään...
+    public void actionPerformed(ActionEvent e) {   //mitä tehdään...
         switch (e.getActionCommand()) {
             case "Kirjaudu":
-                this.luoApupaneeli(1);
+                //this.luoApupaneeli(1);
+                System.out.println("kirjaudutaan");
                 break;
             case "Uusi käyttäjä":
-                this.luoApupaneeli(2);
+                System.out.println("uusi käyttäjä");
+                //this.luoApupaneeli(2);
                 break;
-            case "päivitä":
+            case "Päivitä":
                 karttaKuva.paivitaKartta();
-                karttaKuvaLabel.setIcon(new ImageIcon(karttaKuva.getKartta()));
+                osImage = karttaKuva.getKartta();
+                gr = osImage.getGraphics();
+                kp.paint(gr);
                 break;
-            case "OK":
-                
         }
         revalidate();
         repaint();
@@ -125,6 +143,9 @@ public class GUI extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
+        luoMalliAsiakkaat();
+        luoMalliToimijat();
+        //if (Kirjautuminen.kirjaudu()) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 gui();
@@ -132,3 +153,9 @@ public class GUI extends JFrame implements ActionListener {
         });
     }
 }
+//}
+   //karttaKuvaLabel.setIcon(new ImageIcon(karttaKuva.getKartta()));
+
+            //case "":
+            //System.out.println("ok on");
+            // break;

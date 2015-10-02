@@ -14,18 +14,20 @@ import java.util.*;
  */
 public class Asiakkaat implements Serializable {
     
-    private Set<Asiakas> asiakkaat = new HashSet();
     
-    public boolean onkoNimiVapaa(Asiakas testattava) {
-        boolean ok = true;
+    private static Set<Asiakas> asiakkaat = new HashSet();
+    
+    /**Metodi tutkii onko asiakasta jo tallennettuna, jos on, palauttaa kyseisen Asiakkaan. Palauttaa 
+      nullin jos käyttäjätunnusta ei löydy.**/
+    public static Asiakas asiakasTunnusOlemassa(String tunnus) {
         for (Asiakas a : asiakkaat) {
-            if (a.getNimi().equalsIgnoreCase(testattava.getNimi())) {
-                ok = false;
-                break;
+            if (a.getTunnus().equals(tunnus)) {
+                return a;
             }
         }
-        return ok;
+        return null;
     }
+    
     
     public boolean lisaa(Asiakas a) {
         //pitaiskö heittää oma poikkeus jos ei onnistu?

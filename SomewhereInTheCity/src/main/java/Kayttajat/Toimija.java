@@ -16,10 +16,11 @@ public class Toimija extends Kayttaja {
 
     private static Toimijat toimijat = new Toimijat();
     private String kuvaus;
+    
 
     public Toimija(String nimi, String tunnus, String salasana, String uudSalasana) {
         super(nimi, tunnus, salasana, uudSalasana);
-        if (toimijat.onkoNimiVapaa(this)) {
+        if (toimijat.toimijaTunnusOlemassa(this.getTunnus()) == null) {
             try {
                 this.toimijaListalle(this);
                 System.out.println("Toimija lisatty.");//testaus
@@ -58,6 +59,19 @@ public class Toimija extends Kayttaja {
         }
     }
     
+    
+       public static boolean luoMalliToimijat() {
+        boolean ok = true;
+        try {
+            Toimija t1 = new Toimija("Suvin Sumppila", "susu", "pannukuuma", "pannukuuma");
+            Toimija t2 = new Toimija("Testaamo", "tm", "password", "password");
+            Toimija t3 = new Toimija("Helppo Hodari", "hh", "lallallaa", "lallallaa");
+        } catch (Exception e) {
+            ok = false;
+        }
+        return ok;
+    }
+       
     public static void main(String[] args) {
         Toimija gp = new Toimija("GrilliPyörä", "gr", "moikkis", "moikkis");
         System.out.println(gp.getNimi());
