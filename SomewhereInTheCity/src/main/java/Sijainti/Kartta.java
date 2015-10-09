@@ -85,6 +85,22 @@ public class Kartta {
             return false;
         }
     }
+    
+    public double getLansiraja() {
+        return this.lansiraja;
+    }
+    
+    public double getItaraja() {
+        return this.itaraja;
+    }
+    
+    public double getPohjoisraja() {
+        return this.pohjoisraja;
+    }
+    
+    public double getEtelaraja() {
+        return this.etelaraja;
+    }
 
     public boolean paivitaKartta() {//Myöh. parametreilla
         try {

@@ -97,3 +97,24 @@
 - Total time: **68h** this far (+12h)
 --------------------- 
 
+**Oct 5, 2015**
+- Time: 4h
+- Writing tests, securing constructors, writing an Exception etc.
+
+
+**Oct 6, 2015**
+- Time: 6h
+- Starting the work to achieve the layered panel structure for map and its markers -> totally mixing up the UI
+- Writing some missing methods and checking that everything (except UI) works
+
+**Oct 8, 2015**
+- Time: 6h
+- Writing the MerkkiPaneeli class, setting up the markers and methods to put them on map. Not working yet.
+- The UI still mixed, gives blank page when trying to load the map on JLayeredPane. Most of the day trying to understand why.
+
+**Oct 9, 2015**
+- Time: 4h
+- Finally got the map on JLayeredPane :) The merkkipaneeli on top of it still doesn't show the markers.
+- Some updates to class diagrams.
+
+

@@ -5,6 +5,7 @@
  */
 package Kayttajat;
 
+import static Kayttajat.Toimijat.toimijaTunnusOlemassa;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +21,8 @@ public class Asiakas extends Kayttaja {
 
     private static Asiakkaat asiakkaat = new Asiakkaat();
 
-    public Asiakas(String nimi, String tunnus, String salasana, String uudSalasana) {
+    public Asiakas(String nimi, String tunnus, String salasana, String uudSalasana)
+            throws AlreadyDefinedException {
         super(nimi, tunnus, salasana, uudSalasana);
         if (asiakkaat.asiakasTunnusOlemassa(this.getTunnus()) == null) {
             try {
@@ -32,13 +34,11 @@ public class Asiakas extends Kayttaja {
             }
 
         } else {
-            //voisko tässä lähettää jonkun virheilmon ja vaatia uuden nimen..?
-            this.setNimi("Uusi Asiakas");
-            System.out.println("Nimi on jo listalla.");
+            throw new AlreadyDefinedException("Käyttäjä on jo listalla.");
         }
 
     }
-
+    /** Metodi jolla asiakas voi tallentaa suosikkitoimijoitaan.**/
     public boolean setSuosikki(Toimija lemppari) {
         if (this.suosikit.add(lemppari) && lemppari != null) {
             return true;
@@ -46,7 +46,12 @@ public class Asiakas extends Kayttaja {
             return false;
         }
     }
-
+    
+    public Set<Toimija> getSuosikit() {
+        return this.suosikit;
+    }
+    
+    /** Luokkametodi jolla lisätään asiakas asiakkaat-joukkoon ja kasvattaa käyttäjälaskuria yhdellä.**/
     public static boolean asiakasListalle(Asiakas uusiAsiakas) {
         if (asiakkaat.lisaa(uusiAsiakas)) {
             yksiKayttajaLisaa();
@@ -55,7 +60,7 @@ public class Asiakas extends Kayttaja {
             return false;
         }
     }
-
+    /** Luokkametodi jolla poistetaan asiakas asiakkaat-joukosta.**/
     public static boolean poistaAsiakas(Asiakas poistettava) {
         if (asiakkaat.poista(poistettava)) {
             System.out.println("Toimija " + poistettava + " poistettu");
@@ -64,7 +69,9 @@ public class Asiakas extends Kayttaja {
             return false;
         }
     }
-
+    /** Luokkametodi jolla voi ohjelman alussa luoda malliasiakkaita 
+     * ohjelman testikäyttöä varten.
+     **/
     public static boolean luoMalliAsiakkaat() {
         boolean ok = true;
         try {
@@ -76,6 +83,18 @@ public class Asiakas extends Kayttaja {
             ok = false;
         }
         return ok;
+    }
+    
+    /** Metodi joka lisää asiakkaalle pari suosikkitoimijaa mallitoimijoiden joukosta. 
+     *  Toimii jos on ensin luotu malliToimijat.**/
+    public boolean luoMalliSuosikit() {
+        try {
+        this.setSuosikki(toimijaTunnusOlemassa("susu"));
+        this.setSuosikki(toimijaTunnusOlemassa("tm"));
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
 }

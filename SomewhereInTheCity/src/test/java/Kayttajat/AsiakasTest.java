@@ -6,7 +6,9 @@
 package Kayttajat;
 
 import static Kayttajat.Asiakas.*;
+import static Kayttajat.Toimija.poistaToimija;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -20,22 +22,40 @@ public class AsiakasTest {
     private static Asiakas a, b;
     private static Toimija t;
 
-    @Test
-    public void konstruktoriToimii() {
-        a = new Asiakas("Mina Vaanikainen", "minavaan", "helppo", "helppo");
-        assertEquals("minavaan", a.getTunnus());
-        
-    }
-
     @Before
     public void setUp() {
         a = new Asiakas("Teppo Testaaja", "tt", "123456", "123456");
-        b = new Asiakas("Kaisa Kahvikissa", "kk", "JAVACoffee", "LATTECoffee");
         t = new Toimija("Helppo Hodari", "hh", "lallallaa", "lallallaa");
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
+        poistaToimija(t);
+        poistaAsiakas(a);
+        poistaAsiakas(b);
+        a = null;
+        b = null;
+        t = null;
+
+    }
+
+    @Test
+    public void konstruktoriToimii() {
+        b = new Asiakas("Mina Vaanikainen", "minavaan", "helppo", "helppo");
+        assertEquals("minavaan", b.getTunnus());
+
+    }
+
+    @Test
+    public void konstruktoriHeittaaPoikkeuksen() {
+        String ilmo = "";
+        try {
+            b = new Asiakas("Kaisa Kahvikissa", "kk", "JAVACoffee", "LATTECoffee");
+        } catch (IllegalArgumentException IE) {
+            ilmo = IE.getMessage();
+        }
+        assertEquals(ilmo, "Jokin parametreista ei kelpaa.");
+
     }
 
     @Test
@@ -49,19 +69,19 @@ public class AsiakasTest {
         assertEquals(a.setSuosikki(lemppari), false);
     }
 
+    public void yksiLisaaAsiakkailla() {
+        b = new Asiakas("Allu Asiakas", "allu", "lullaa", "lullaa");
+        assertEquals(a.getNro(), b.getNro()-2);
+    }
+    
     @Test
     public void setSalasana() {
         assertEquals(a.setSalasana("moi", "iom"), false);
 
     }
 
-    /**
-     * Test of asiakasListalle method, of class Asiakas.
-     */
-    @Test
-    public void testAsiakasListalle() {
-        assertEquals(asiakasListalle(a), true);
-    }
-
-
+    /*@Test
+     public void AsiakasListalleUudelleen() {
+     assertEquals(asiakasListalle(a), false);
+     }*/
 }

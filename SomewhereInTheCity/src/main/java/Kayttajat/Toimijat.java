@@ -29,6 +29,8 @@ public class Toimijat implements Serializable {
         return null;
     }
 
+     /** Metodi lisää toimijan kokoelmaan. 
+     * * Palauttaa false:n jos toimija on jo listalla.**/
     public static boolean lisaa(Toimija t) {
         //pitaiskö heittää oma poikkeus jos ei onnistu?
         if (toimijat.add(t)) {
@@ -38,6 +40,8 @@ public class Toimijat implements Serializable {
         }
     }
 
+        /** Metodi poistaa toimijan kokoelmasta. Palauttaa true:n jos toimija löytyy kokoelmasta
+     * * ja poisto onnistuu. **/
     public static boolean poista(Toimija p) {
         if (toimijat.remove(p)) {
             return true;

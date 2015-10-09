@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  */
 public class ToimijaTest {
 
-    private static Toimija tm;
+    private static Toimija tm, tr;
 
     @Test
     public void konstruktoriTest() {
@@ -33,12 +33,18 @@ public class ToimijaTest {
     @After
     public void tearDown() {
         poistaToimija(tm);
+        tm = null;
     }
     
     @Test
     public void toimijaOnJoListallaTest() {
         toimijaListalle(tm);
         assertEquals(toimijaListalle(tm), false);
+    }
+    
+       public void yksiLisaaAsiakkailla() {
+        tr = new Toimija("Kallen Kahvila", "fressi", "tosihyva", "tosihyva");
+        assertEquals(tm.getNro(), tr.getNro()-1);
     }
     
 

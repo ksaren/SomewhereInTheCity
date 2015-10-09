@@ -5,10 +5,12 @@
  */
 package Kayttajat;
 
+import static Kayttajat.Toimijat.toimijaTunnusOlemassa;
 import java.util.HashSet;
 import java.util.Set;
 
-/**Luokka ruokatoimijoiden tallennukseen.
+/**
+ * Luokka ruokatoimijoiden tallennukseen.
  *
  * @author kaisa
  */
@@ -16,7 +18,7 @@ public class Toimija extends Kayttaja {
 
     private static Toimijat toimijat = new Toimijat();
     private String kuvaus;
-    
+    private boolean avoinna = false;
 
     public Toimija(String nimi, String tunnus, String salasana, String uudSalasana) {
         super(nimi, tunnus, salasana, uudSalasana);
@@ -41,6 +43,9 @@ public class Toimija extends Kayttaja {
         this.kuvaus = kuvausteksti;
     }
 
+    /**
+     * Luokkametodi jolla lisätään toimija toimijat-kokoelmaan.*
+     */
     public static boolean toimijaListalle(Toimija uusiKarry) {
         if (toimijat.lisaa(uusiKarry)) {
             yksiKayttajaLisaa();
@@ -50,6 +55,10 @@ public class Toimija extends Kayttaja {
         }
     }
 
+    /**
+     * Luokkametodi jolla poistetaan toimija toimijat-listalta.*
+     * @param poistettava
+     */
     public static boolean poistaToimija(Toimija poistettava) {
         if (toimijat.poista(poistettava)) {
             System.out.println("Toimija " + poistettava.getNimi() + " poistettu");
@@ -58,26 +67,29 @@ public class Toimija extends Kayttaja {
             return false;
         }
     }
-    
-    
-       public static boolean luoMalliToimijat() {
+
+    /**
+     * Luokkametodi jolla luodaan esimerkkitoimijoita ohjelman alussa. Demo-käyttöön.
+     * 
+     * @return 
+     */
+    public static boolean luoMalliToimijat() {
         boolean ok = true;
         try {
             Toimija t1 = new Toimija("Suvin Sumppila", "susu", "pannukuuma", "pannukuuma");
             Toimija t2 = new Toimija("Testaamo", "tm", "password", "password");
             Toimija t3 = new Toimija("Helppo Hodari", "hh", "lallallaa", "lallallaa");
+            Toimija t4 = new Toimija("GrilliPyörä", "gr", "moikkis", "moikkis");
         } catch (Exception e) {
             ok = false;
         }
         return ok;
     }
-       
+
     public static void main(String[] args) {
-        Toimija gp = new Toimija("GrilliPyörä", "gr", "moikkis", "moikkis");
-        System.out.println(gp.getNimi());
-        System.out.println(gp.getTunnus());
-        System.out.println(poistaToimija(gp));
-        
+        luoMalliToimijat();
+        System.out.println(toimijaTunnusOlemassa("susu"));
+
     }
 
 }

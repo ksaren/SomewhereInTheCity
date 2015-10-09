@@ -11,7 +11,7 @@ package Kayttoliittyma;
  * @author kaisa
  */
 import static Logiikka.Syotteet.*;
-import Kayttoliittyma.Kirjautuminen.*;
+import Kayttoliittyma.KirjautumisIkkuna.*;
 import static Sijainti.Sijainti.*;
 import java.util.*;
 

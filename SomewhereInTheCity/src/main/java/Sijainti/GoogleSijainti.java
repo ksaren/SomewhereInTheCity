@@ -6,7 +6,7 @@
 package Sijainti;
 
 /**
- * Luokka joka säilyttää senhetkistä sijaintia LatLng-oliokentässä ja
+ * Luokka joka säilyttää käyttäjän senhetkistä sijaintia LatLng-oliokentässä ja
  * mahdollisia API-avaimia Googlen API:en käyttöä varten.
  *
  *
