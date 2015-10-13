@@ -90,6 +90,7 @@ public class YlaPaneeli extends JLayeredPane {
             this.kartanKoko = koko;
             this.kayttaja = k;
             this.add(omaLabel);
+            omaLabel.setSize(20, 20);
             omaLabel.setLocation(512, 512);
             
 
@@ -139,6 +140,7 @@ public class YlaPaneeli extends JLayeredPane {
                 for (SuosikkiLahella lahiSuosikki : suosikitLahella) {
                     asetettava = lahiSuosikki.getSuosikkiLabel();
                     this.add(asetettava);
+                    asetettava.setSize(20, 20);
                     asetettava.setLocation(lahiSuosikki.getSijaintiKuvassa().x, lahiSuosikki.getSijaintiKuvassa().y);
                 }
                 //luo lista numeroiden toimijoista kartan viereen (jos ehtii!)
@@ -197,47 +199,47 @@ public class KarttaPaneeli extends JPanel {
     }
 }
 
-/* Idea tähän on saatu SOF:sta, JLayeredPane manuaalinen layout-manager ratkaisuna siihen, että 
-muuten JLayeredPanen JPanelit näkyvät.*/
+/* Idea tähän on saatu SOF:sta, JLayeredPane ja manuaalinen layout-manager ratkaisuna siihen, että 
+muuten JLayeredPanen JPanelit eivät näy.*/
 
 public static class AbsoluteLayoutManager implements LayoutManager {
 
-        private Map<Component, Rectangle> bounds = new LinkedHashMap<Component,
+        private Map<Component, Rectangle> rajat = new LinkedHashMap<Component,
                 Rectangle>();
 
         @Override
-        public void addLayoutComponent(String name, Component comp) {
-            bounds.put(comp, new Rectangle(comp.getPreferredSize()));
+        public void addLayoutComponent(String nimi, Component comp) {
+            rajat.put(comp, new Rectangle(comp.getPreferredSize()));
         }
 
         @Override
         public void removeLayoutComponent(Component comp) {
-            bounds.remove(comp);
+            rajat.remove(comp);
         }
 
         @Override
-        public Dimension preferredLayoutSize(Container parent) {
-            Rectangle rect = new Rectangle();
-            for (Rectangle r : bounds.values()) {
-                rect = rect.union(r);
+        public Dimension preferredLayoutSize(Container kehys) {
+            Rectangle suorakulmio = new Rectangle();
+            for (Rectangle r : rajat.values()) {
+                suorakulmio = suorakulmio.union(r);
             }
-            return rect.getSize();
+            return suorakulmio.getSize();
         }
 
         @Override
-        public Dimension minimumLayoutSize(Container parent) {
-            return preferredLayoutSize(parent);
+        public Dimension minimumLayoutSize(Container kehys) {
+            return preferredLayoutSize(kehys);
         }
 
         @Override
-        public void layoutContainer(Container parent) {
-            for (Entry<Component, Rectangle> e : bounds.entrySet()) {
+        public void layoutContainer(Container kehys) {
+            for (Entry<Component, Rectangle> e : rajat.entrySet()) {
                 e.getKey().setBounds(e.getValue());
             }
         }
 
-        public void setBounds(Component c, Rectangle bounds) {
-            this.bounds.put(c, bounds);
+        public void setBounds(Component c, Rectangle rajat) {
+            this.rajat.put(c, rajat);
         }
     }
 
@@ -277,8 +279,7 @@ public static class AbsoluteLayoutManager implements LayoutManager {
     luoMalliToimijat();
     alli.luoMalliSuosikit();
     Dimension koko = new Dimension(kr.getKartta().getHeight(null),kr.getKartta().getWidth(null));
-    YlaPaneeli mp;
-    mp = new YlaPaneeli(alli);
+    MerkkiPaneeli mp;
     JPanel jlp = new JPanel();
     jlp.setOpaque(false);
     JPanel jp = new  JPanel();

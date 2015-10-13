@@ -34,7 +34,7 @@ public class Asiakas extends Kayttaja {
             }
 
         } else {
-            throw new AlreadyDefinedException("Käyttäjä on jo listalla.");
+            throw new AlreadyDefinedException("Asiakas on jo listalla.");
         }
 
     }

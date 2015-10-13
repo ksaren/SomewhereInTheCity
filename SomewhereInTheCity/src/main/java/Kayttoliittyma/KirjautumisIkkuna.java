@@ -23,12 +23,14 @@ import javax.swing.*;
  */
 public class KirjautumisIkkuna extends JFrame implements ActionListener {
     
+    //Käyttöliittymäkomponentteja
     private JPanel kirjautumisPaneeli;
     private JButton OKnappi;
     private JLabel kirjAputeksti;
     private JTextField kirjautumisTekstikentta;
     private JButton alanappi;
     private JButton lopeta;
+    private JButton demo;
 
     //Tapahtumankäsittelyssä tarvittavia muuttujia
     Kayttaja k;
@@ -40,31 +42,56 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
     boolean tunnistusOK = false;
     
     public KirjautumisIkkuna() {
-        this.setLayout(new FlowLayout());
+        this.setLayout(new BorderLayout());
         this.setBackground(Color.GRAY);
-        
+        this.kirjautumisPaneeli = new JPanel(new FlowLayout());
+        this.kirjautumisPaneeli.setPreferredSize(null);
         this.OKnappi = new JButton("Kirjaudu");
         this.kirjAputeksti = new JLabel("Käyttäjätunnus:");
         this.kirjautumisTekstikentta = new JTextField(20);
         this.alanappi = new JButton("Uusi käyttäjä?");
+        this.demo = new JButton("Käytä demoversiota");
         this.lopeta = new JButton("Lopeta");
         
         OKnappi.addActionListener(this);
         alanappi.addActionListener(this);
         lopeta.addActionListener(this);
+        demo.addActionListener(this);
         
-        this.add(kirjAputeksti, "North");
-        this.add(kirjautumisTekstikentta, "Center");
-        this.add(OKnappi, "East");
-        this.add(alanappi, "South");
-        this.add(lopeta, "West");
+        kirjautumisPaneeli.add(kirjAputeksti);
+        kirjautumisPaneeli.add(kirjautumisTekstikentta);
+        kirjautumisPaneeli.add(OKnappi);
+        kirjautumisPaneeli.add(alanappi);
+        kirjautumisPaneeli.add(lopeta);
+        kirjautumisPaneeli.add(demo);
+        demo.setVisible(false);
+        
+        this.add(kirjautumisPaneeli, "Center");
+        this.setMinimumSize(new Dimension(500,100));
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
+            
             case "Lopeta":
                 dispose();
+                break;
+            
+            case "Käytä demoversiota":
+                try {
+                if (k.getClass().equals(Asiakas.class)) {
+                    Asiakas a = (Asiakas)k;
+                    a.luoMalliSuosikit();
+                } else if (k.getClass().equals(Toimija.class)) {
+                    Toimija t = (Toimija)k;
+                } else throw new RuntimeException("Ongelma käyttäjän tunnistamisessa.");
+                } catch (RuntimeException rE) {
+                    this.virheIlmo(rE.getMessage());
+                    dispose();
+                }
+                break;
+                
             case "Kirjaudu":
                 alanappi.setVisible(false);
                 kTunnus = kirjautumisTekstikentta.getText();
@@ -76,6 +103,7 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                 if (k == null) {
                     this.kirjoita("Kayttäjätunnusta " + kTunnus
                             + " ei löydy. Yritä uudelleen tai luo uusi tunnus.");
+                    this.alanappi.setVisible(true);
                 } else {
                     this.kirjoita("Salasana:");
                     this.muutaNappi("Valmis");
@@ -90,6 +118,7 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                 } else {
                     this.kirjoita("Käyttäjä tunnistettu!");
                     this.muutaNappi("Käynnistä ohjelma");
+                    demo.setVisible(true);
                     lopeta.setVisible(false);
                     kirjautumisTekstikentta.setVisible(false);
                     break;
@@ -98,6 +127,7 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                 tunnistusOK = true;
                 //suljetaan kirjautumisikkuna (ja kutsutaan GUIta main-ohjelmassa)
                 this.setVisible(false);
+                OhjelmaIkkuna.gui(this.k);
                 break;
             
             case "Uusi käyttäjä?":
@@ -154,6 +184,8 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                 
                 break;
         }
+        revalidate();
+        repaint();
     }
 
     /**
@@ -179,15 +211,19 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
     }
     
     /**
-     * "gui"-metodi, joka rakentaa kirjautumisikkunan. Tarkoitus, että kertoo paluuarvolla 
-     * kirjautumisen onnistumisen - ominaisuus ei toimi vielä
-     * @return boolean , false jos kirjautumistoimet epäonnistuivat
+     * "gui"-metodi, joka rakentaa kirjautumisikkunan. 
      */
     protected void kirjaudu() {
-        pack();
-        setTitle("Somewhere in the City - kirjautuminen");
-        setLocation(200, 200);
-        setVisible(true);
+        this.pack();
+        this.setTitle("Somewhere in the City - kirjautuminen");
+        this.setLocation(200, 200);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+    
+    
+    private void virheIlmo(String virhe) {
+        JOptionPane.showMessageDialog(this, virhe);
     }
     
     public static void main(String[] args) {
@@ -201,3 +237,17 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
         });
     }
 }
+        /*WindowStateListener ikkunaVahti = new WindowStateListener() {
+
+         @Override
+         public void windowStateChanged(WindowEvent e) {
+         if (l.isVisible() == false) {
+                    
+         } else 
+                    
+         }
+         };*/
+
+        
+                
+      

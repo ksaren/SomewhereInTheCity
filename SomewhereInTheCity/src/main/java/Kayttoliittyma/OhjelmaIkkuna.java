@@ -26,7 +26,9 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
     private JPanel ohjausPaneeli;
     // private KirjautumisIkkuna kirjautumisIkkuna;
 
-    private Kayttaja k;
+    private Kayttaja ohjelmanKayttaja;
+    private Asiakas asiakasKayttaja;
+    private Toimija toimijaKayttaja;
 
     private JButton testiNappi;
     BufferedImage osImage = null;
@@ -37,9 +39,10 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
     //private JButton uusiKayttaja;
     //private KarttaPaneeli kp;
 
-    public OhjelmaIkkuna() {
-
+    public OhjelmaIkkuna(Kayttaja k) {
+        this.ohjelmanKayttaja = k;
         this.setLayout(new BorderLayout());
+        this.setResizable(false);
         this.kaynnistaOhjelma();
 
     } //konstruktori
@@ -51,21 +54,21 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
     public void kaynnistaOhjelma() {
         //k = kirjautumisIkkuna.getKayttaja();
         //kirjautumisIkkuna.setVisible(false);
-        k = new Asiakas("Minna Malli", "mima", "mamima", "mamima");
-        ylapaneeli = new YlaPaneeli(k);
+        ylapaneeli = new YlaPaneeli(this.ohjelmanKayttaja);
         this.add(ylapaneeli, "North");
         System.out.println("Ylapaneeli luotu");
-        if (k.getClass().equals(Asiakas.class)) {
-            ohjausPaneeli = new AsiakasPaneeli();
+        if (this.ohjelmanKayttaja.getClass().equals(Asiakas.class)) {
+            this.asiakasKayttaja = (Asiakas)this.ohjelmanKayttaja;
+            ohjausPaneeli = new AsiakasPaneeli(asiakasKayttaja);
             System.out.println("asiakaspaneeli luotu");
-        } else if (k.getClass().equals(Toimija.class)) {
-            ohjausPaneeli = new ToimijaPaneeli();
+        } else if (this.ohjelmanKayttaja.getClass().equals(Toimija.class)) {
+            this.toimijaKayttaja = (Toimija)this.ohjelmanKayttaja;
+            ohjausPaneeli = new ToimijaPaneeli(toimijaKayttaja);
         } else {
             ohjausPaneeli = new JPanel(new FlowLayout());
             ohjausPaneeli.add(new JLabel("Tietojasi ei löydy. Käynnistä ohjelma"
                     + " uudelleen."));
         }
-        ohjausPaneeli.setBackground(Color.BLUE);
         testiNappi = new JButton("Päivitä");
         testiNappi.addActionListener(this);
         ohjausPaneeli.add(testiNappi);
@@ -81,6 +84,7 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
             case "Päivitä":
                 System.out.println("kutsu kuultu");
                 ylapaneeli.karttapaneeli.paivitaJaHaeKartta();
+                if (asiakasKayttaja != null)
                 ylapaneeli.merkkipaneeli.suosikitPaneeliin();
             /*case AsiakasPaneeli:
              System.out.println("uusi käyttäjä");
@@ -98,9 +102,10 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
         repaint();
 
     }
+   
 
-    private static void gui() {
-        OhjelmaIkkuna g = new OhjelmaIkkuna();
+    static void gui(Kayttaja k) {
+        OhjelmaIkkuna g = new OhjelmaIkkuna(k);
         g.pack();
         g.setTitle("Somewhere in the City");
         g.setVisible(true);
@@ -108,35 +113,6 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        final KirjautumisIkkuna l = new KirjautumisIkkuna();
-        /*WindowStateListener ikkunaVahti = new WindowStateListener() {
-
-         @Override
-         public void windowStateChanged(WindowEvent e) {
-         if (l.isVisible() == false) {
-                    
-         } else 
-                    
-         }
-         };*/
-
-        luoMalliAsiakkaat();
-        luoMalliToimijat();
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                gui();
-                l.kirjaudu();
-                Kayttaja k = l.getKayttaja();
-                    Asiakas a = (Asiakas)k;
-                    a.luoMalliSuosikit();
-                System.out.println("if-lauseessa ollaan! Käynnistetään pääohjelma");
-                
-                
-            }
-            //  }
-        });
     }
+    
 }
-
-   //karttaKuvaLabel.setIcon(new ImageIcon(karttaKuva.getKartta()));
-

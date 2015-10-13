@@ -49,6 +49,10 @@ public class Toimijat implements Serializable {
             return false;
         }
     }
+    
+    public static Set<Toimija> kaikkiToimijat() {
+        return toimijat;
+    }
 
 
 

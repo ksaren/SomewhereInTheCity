@@ -40,6 +40,7 @@ public class SuosikkiLahella {
     private void rakennaLabel(int nro) {
         suosikkiLabel = new JLabel(Integer.toString(this.numero),
                         this.suosikkiIkoni, JLabel.CENTER);
+        suosikkiLabel.setOpaque(true);
     }
 
     public Point maaritaKuvaan(LatLng koord) {

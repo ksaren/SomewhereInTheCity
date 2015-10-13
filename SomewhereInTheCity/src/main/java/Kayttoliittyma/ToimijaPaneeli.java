@@ -5,6 +5,7 @@
  */
 package Kayttoliittyma;
 
+import Kayttajat.Toimija;
 import javax.swing.JPanel;
 
 /**
@@ -14,7 +15,7 @@ import javax.swing.JPanel;
 public class ToimijaPaneeli extends JPanel {
     
 
-public ToimijaPaneeli() {
+public ToimijaPaneeli(Toimija t) {
     
 }
 
