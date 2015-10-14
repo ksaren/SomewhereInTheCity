@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import javax.swing.*;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.DefaultCaret;
@@ -69,6 +70,7 @@ public class AsiakasPaneeli extends JPanel implements ActionListener {
         this.suosikkiAlue.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.suosikkiAlue.setSize(100, 200);
         this.suosikkiScrollausAlue = new JScrollPane(suosikkiAlue);
+        this.suosikkiScrollausAlue.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         this.suosikkiScrollausAlue.setMinimumSize(new Dimension(200, 100));
         
         suosikkiAlue.addListSelectionListener(new ListSelectionListener() {

@@ -18,7 +18,7 @@ public class Toimija extends Kayttaja {
 
     private static Toimijat toimijat = new Toimijat();
     private String kuvaus;
-    private boolean avoinna = false;
+    private boolean aukiVaiEi = false;
 
     public Toimija(String nimi, String tunnus, String salasana, String uudSalasana) {
         super(nimi, tunnus, salasana, uudSalasana);
@@ -77,13 +77,33 @@ public class Toimija extends Kayttaja {
         boolean ok = true;
         try {
             Toimija t1 = new Toimija("Suvin Sumppila", "susu", "pannukuuma", "pannukuuma");
+            t1.setKuvaus("Suloisia suosikkikahvejasi Suvin kärrystä.");
             Toimija t2 = new Toimija("Testaamo", "tm", "password", "password");
+            t2.setKuvaus("Innovatiiviset fuusiokokeilut läheltä.");
             Toimija t3 = new Toimija("Helppo Hodari", "hh", "lallallaa", "lallallaa");
+            t3.setKuvaus("Hyviä hodareita lähinakeilla.");
             Toimija t4 = new Toimija("GrilliPyörä", "gr", "moikkis", "moikkis");
+            t4.setKuvaus("Klassista kunnon grilliruokaa, vie takuulla nälän!");
+            Toimija t5 = new Toimija("Taunon taikku", "taikku", "tairuokaa", "tairuokaa");
+            t5.setKuvaus("Taimaalaista Taunon tapaan. Päivän tarjous kanaa!");
+            Toimija t6 = new Toimija("Hamppari Oy", "hamppari", "hhhhhh", "hhhhhh");
+            t6.setKuvaus("Gourmethampurilaisia parhaista kauden aineksista.");
+            Toimija t7 = new Toimija("Kuutosen pitsa", "pitsa6e", "poliisionystava", "poliisionystava");
+            t7.setKuvaus("Täytteenä veronkiertoa, halpatyötä ja kurjia aineksia. Kysy MaRa-versiota tai kuittia!");
+            
         } catch (Exception e) {
             ok = false;
         }
         return ok;
+    }
+    
+    public String getKuvaus() {
+        return this.kuvaus;
+    }
+    
+    
+    public void setStatus(boolean avoinna) {
+        this.aukiVaiEi = avoinna;
     }
     
     @Override
@@ -91,14 +111,8 @@ public class Toimija extends Kayttaja {
         return this.getNimi();
     }
 
-    public static void main(String[] args) {
-        luoMalliToimijat();
-        System.out.println(toimijaTunnusOlemassa("susu"));
 
-    }
+    
 
-    public String getKuvaus() {
-        return this.kuvaus;
-    }
 
 }

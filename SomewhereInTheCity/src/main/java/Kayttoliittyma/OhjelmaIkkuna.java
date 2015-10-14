@@ -34,7 +34,6 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
     BufferedImage osImage = null;
     Graphics gr = null;
 
-
     public OhjelmaIkkuna(Kayttaja k) {
         this.ohjelmanKayttaja = k;
         this.setLayout(new BorderLayout());
@@ -50,13 +49,15 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
     public void kaynnistaOhjelma() {
         ylapaneeli = new YlaPaneeli(this.ohjelmanKayttaja);
         this.add(ylapaneeli, "North");
-        
+
         if (this.ohjelmanKayttaja.getClass().equals(Asiakas.class)) {
-            this.asiakasKayttaja = (Asiakas)this.ohjelmanKayttaja;
+            this.asiakasKayttaja = (Asiakas) this.ohjelmanKayttaja;
             ohjausPaneeli = new AsiakasPaneeli(asiakasKayttaja);
+            infoPaneeli = new InfoPaneeli();
+            this.add(infoPaneeli, "East");
             System.out.println("asiakaspaneeli luotu");
         } else if (this.ohjelmanKayttaja.getClass().equals(Toimija.class)) {
-            this.toimijaKayttaja = (Toimija)this.ohjelmanKayttaja;
+            this.toimijaKayttaja = (Toimija) this.ohjelmanKayttaja;
             ohjausPaneeli = new ToimijaPaneeli(toimijaKayttaja);
         } else {
             ohjausPaneeli = new JPanel(new FlowLayout());
@@ -64,12 +65,10 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
                     + " uudelleen."));
         }
         testiNappi = new JButton("Päivitä");
+        testiNappi.setSize(2, 10);
         testiNappi.addActionListener(this);
         ohjausPaneeli.add(testiNappi);
         this.add(ohjausPaneeli, "South");
-        infoPaneeli = new InfoPaneeli();
-        infoPaneeli.setPreferredSize(new Dimension(200, ylapaneeli.getHeight()));
-        this.add(infoPaneeli, "East");
         revalidate();
         repaint();
 
@@ -81,52 +80,59 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
             case "Päivitä":
                 ;
                 if (asiakasKayttaja != null) {
-                      System.out.println("kutsu kuultu");
-                ylapaneeli.merkkipaneeli.asetaSuosikitPaneeliin(this.asiakasKayttaja,ylapaneeli.karttapaneeli.paivitaJaHaeKartta());
-                infoPaneeli.paivitaInfo();
+                    System.out.println("kutsu kuultu");
+                    ylapaneeli.merkkipaneeli.asetaSuosikitPaneeliin(this.asiakasKayttaja, ylapaneeli.karttapaneeli.paivitaJaHaeKartta());
+                    infoPaneeli.paivitaInfo();
                 } else if (toimijaKayttaja != null) {
                     ylapaneeli.karttapaneeli.paivitaJaHaeKartta();
                 }
                 break;
-          
-      
+
         }
         revalidate();
         repaint();
 
     }
-    
-    /** JPanelin perivä luokka jonne tulostuu kaikkien alueella olevien suosikkiToimijoiden nimet ja 
- * kuvaukset.
- *
- * @author kaisa
- */
-public class InfoPaneeli extends JPanel{
-    
-    private JTextArea tekstialue;
-    private JScrollPane scrollAlue;
-    
-    public InfoPaneeli() {
-        tekstialue = new JTextArea("Suosikkisi alueella:");
-        tekstialue.setSize(200, 1000);
-        scrollAlue = new JScrollPane(tekstialue);
-        tekstialue.setEditable(false);
-        this.add(scrollAlue);
-        
+
+    /**
+     * JPanelin perivä luokka jonne tulostuu kaikkien alueella olevien
+     * suosikkiToimijoiden nimet ja kuvaukset.
+     *
+     * @author kaisa
+     */
+    public class InfoPaneeli extends JPanel {
+
+        private JTextArea tekstialue;
+        private JScrollPane scrollAlue;
+
+        public InfoPaneeli() {
+            tekstialue = new JTextArea("Suosikkisi alueella:");
+            tekstialue.setSize(200, 50);
+            scrollAlue = new JScrollPane(tekstialue);
+            tekstialue.setEditable(false);
+            this.add(scrollAlue);
+            this.paivitaInfo();
+
+        }
+
+        /**
+         * Metodi joka käy merkkipaneelin suosikitLähellä-listalta läpi kaikki
+         * SuosikkiLahella-oliot ja lisää ne infopaneelin tekstialueelle
+         * kuvauksineen ja numeroineen.
+         */
+        public void paivitaInfo() {
+            tekstialue.setText("Suosikkisi alueella:\n");
+            for (SuosikkiLahella lahiKiska : ylapaneeli.merkkipaneeli.suosikitLahella) {
+                tekstialue.append(lahiKiska.getNumeroListalla() + ". : ");
+                tekstialue.append(lahiKiska.getNimi() + "\n");
+                tekstialue.append(lahiKiska.getKuvaus() + "\n\n");
+                repaint();
+
+            }
+        }
+
     }
-    
-    public void paivitaInfo() {
-        tekstialue.setText("Suosikkisi alueella:\n");
-        for (SuosikkiLahella lahiKiska : ylapaneeli.merkkipaneeli.suosikitLahella) {
-            //tekstialue.append
-            System.out.println(lahiKiska.getNumeroListalla() + ". : ");
-            tekstialue.append(lahiKiska.getNimi() +"\n");
-            tekstialue.append(lahiKiska.getKuvaus() + "\n\n");
-            
-    }
-}
-   
-}
+
     public static void gui(Kayttaja k) {
         OhjelmaIkkuna g = new OhjelmaIkkuna(k);
         g.pack();
@@ -134,8 +140,5 @@ public class InfoPaneeli extends JPanel{
         g.setVisible(true);
         g.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
-  
-    
 
 }

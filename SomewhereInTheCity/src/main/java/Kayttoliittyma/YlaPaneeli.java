@@ -41,25 +41,17 @@ public class YlaPaneeli extends JLayeredPane {
     }
 
     public YlaPaneeli(Kayttaja k) {
-        layout = new AbsoluteLayoutManager();
-        this.setLayout(layout);
-        System.out.println("rakennetaan ylapaneeli...");
+       layout = new AbsoluteLayoutManager();
+       this.setLayout(layout);
         karttapaneeli = new KarttaPaneeli();
-        //this.setPreferredSize(karttapaneeli.getMapSize());
-        System.out.println("karttapaneeli ok");
+        this.setPreferredSize(karttapaneeli.getMapSize());
         merkkipaneeli = new MerkkiPaneeli(k, karttapaneeli.getMapSize());
-        System.out.println("merkkipaneeli ok");
-       // karttapaneeli.setPreferredSize(); //asettaa kartan koon paneelin kooksi
+       //karttapaneeli.setPreferredSize(); //asettaa kartan koon paneelin kooksi
         //merkkipaneeli.setPreferredSize(); //
-        System.out.println("kokojen määritys ok");
-        //this.setComponentZOrder(karttapaneeli, 0);
-        //this.setComponentZOrder(merkkipaneeli, 1);
-        System.out.println("järjestys ok");
         this.add(karttapaneeli, JLayeredPane.DEFAULT_LAYER);
         this.add(merkkipaneeli, JLayeredPane.PALETTE_LAYER);
-        layout.setBounds(karttapaneeli, new Rectangle(karttapaneeli.getPreferredSize()));
-        layout.setBounds(merkkipaneeli, new Rectangle(merkkipaneeli.getPreferredSize()));
-        System.out.println("ylapaneeli valmis");
+       layout.setBounds(karttapaneeli, new Rectangle(karttapaneeli.getPreferredSize()));
+       layout.setBounds(merkkipaneeli, new Rectangle(merkkipaneeli.getPreferredSize()));
         repaint();
     }
 
@@ -72,13 +64,17 @@ public class YlaPaneeli extends JLayeredPane {
      */
     public class MerkkiPaneeli extends JPanel {
 
+        /** ArrayList -kenttä, jonne luodaan ja talletetaan sillä hetkellä kartta-alueella olevat Toimijat
+         * SuosikkiLahella -olion muodossa.
+         */
         ArrayList<SuosikkiLahella> suosikitLahella;
         private final ImageIcon omaPaikkaIkoni;
-        private SuosikkiMerkki suosikkimerkki;
         private Dimension kartanKoko;
         private JLabel omaLabel;
         private Kayttaja kayttaja;
 
+      
+        
         public MerkkiPaneeli(Kayttaja k, Dimension koko) {
             this.setLayout(null);
             this.setOpaque(false);
@@ -86,7 +82,6 @@ public class YlaPaneeli extends JLayeredPane {
             this.omaPaikkaIkoni = new ImageIcon("tyyppipinni.png",
             "Sijaintimerkki varustettuna ihmisen kuvalla.");
             this.omaLabel = new JLabel(this.omaPaikkaIkoni);
-            //this.suosikkimerkki = new SuosikkiMerkki((Asiakas) k);
             this.kartanKoko = koko;
             this.kayttaja = k;
             this.add(omaLabel);
@@ -100,10 +95,11 @@ public class YlaPaneeli extends JLayeredPane {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             this.setOpaque(false);//läpinäkyvä
-            this.asetaSuosikitPaneeliin((Asiakas) kayttaja, karttapaneeli.karttaKuva);
+            this.add(omaLabel);
+          this.asetaSuosikitPaneeliin((Asiakas) kayttaja, karttapaneeli.karttaKuva);
             revalidate();
             repaint();
-            //pallo.liikuJaNay(g); //pallo liikkuu ja piirtaa itsensä
+            
         }
 
         /**
@@ -119,7 +115,7 @@ public class YlaPaneeli extends JLayeredPane {
          * Metodi joka tutkii onko asiakkaan suosikkitoimijoita kartan alueella
          * ja jos on, asettaa kartalle markkerin vastaavalle paikalle.*
          */
-        public boolean asetaSuosikitPaneeliin(Kayttaja kayttaja, Kartta kartta) {
+       public boolean asetaSuosikitPaneeliin(Kayttaja kayttaja, Kartta kartta) {
             if (kayttaja.getClass().equals(Asiakas.class)) {
             LatLng sijainti = new LatLng(0.0, 0.0);
             Asiakas a = (Asiakas)kayttaja;
@@ -154,12 +150,13 @@ public class YlaPaneeli extends JLayeredPane {
         }
 
 
-        /*public Merkki getSuosikkiMerkki(Toimija t) {
-         return ;
-         }*/
+      
     }
 
 
+             
+        
+        
 
 /**JPanelin perivä luokka jossa on päivittyvä karttapohja.
  *
@@ -197,6 +194,7 @@ public class KarttaPaneeli extends JPanel {
         return karttaKuva;
     }
 }
+    
 
 /* Idea tähän on saatu SOF:sta, JLayeredPane ja manuaalinen layout-manager ratkaisuna siihen, että 
 muuten JLayeredPanen JPanelit eivät näy.*/
@@ -242,6 +240,7 @@ public static class AbsoluteLayoutManager implements LayoutManager {
         }
     }
 
+    //malli JLayeredPanelle:
     /*protected void initUI() {
         JFrame frame = new JFrame("test");
         AbsoluteLayoutManager layout = new AbsoluteLayoutManager();
@@ -271,21 +270,29 @@ public static class AbsoluteLayoutManager implements LayoutManager {
     }*/
 
 
-/*public static void main(String[] args) {
+public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     Asiakas alli = new Asiakas("Alli Malli", "alma", "mallijuu", "mallijuu");
     Kartta kr = new Kartta();
     luoMalliAsiakkaat();
     luoMalliToimijat();
     alli.luoMalliSuosikit();
     Dimension koko = new Dimension(kr.getKartta().getHeight(null),kr.getKartta().getWidth(null));
-    MerkkiPaneeli mp;
-    JPanel jlp = new JPanel();
-    jlp.setOpaque(false);
     JPanel jp = new  JPanel();
     jp.add(new JLabel(new ImageIcon(kr.getKartta())));
-    jlp.add(jp);
-    jlp.setPreferredSize(koko);
+    jp.setPreferredSize(koko);
+    ImageIcon omaPaikkaIkoni = new ImageIcon("tyyppipinni.png",
+            "Sijaintimerkki varustettuna ihmisen kuvalla.");
+    JLabel omaLabel = new JLabel(omaPaikkaIkoni);
+    JPanel omaPaneeli = new JPanel();
+    omaPaneeli.add(omaLabel);
+    omaPaneeli.setOpaque(false);
     JFrame f = new JFrame();
+    JLayeredPane jlp = new JLayeredPane();
+    AbsoluteLayoutManager layout = new AbsoluteLayoutManager();
+    jlp.setLayout(layout);
+    jlp.add(jp, JLayeredPane.DEFAULT_LAYER);
+    jlp.add(omaPaneeli, JLayeredPane.PALETTE_LAYER);
     f.setPreferredSize(koko);
     f.add(jlp);
     f.pack();
@@ -293,5 +300,6 @@ public static class AbsoluteLayoutManager implements LayoutManager {
     f.revalidate();
     f.repaint();
     
-}*/
+
+}
 }
