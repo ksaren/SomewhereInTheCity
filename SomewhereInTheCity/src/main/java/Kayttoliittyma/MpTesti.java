@@ -99,7 +99,7 @@ public class MpTesti extends JPanel {
             for (Toimija lemppari : a.getSuosikit()) {
                 sijainti = lemppari.getSijainti().getKoordinaatit();
                 if (k.onkoKartalla(sijainti)) {
-                    suosikitLahella.add(new SuosikkiLahella(i, sijainti, k));
+                    suosikitLahella.add(new SuosikkiLahella(i, sijainti, k, lemppari));
                     i++;
                 }
             }

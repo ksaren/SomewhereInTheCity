@@ -183,6 +183,11 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                 this.muutaNappi("Kirjaudu");
                 
                 break;
+            case "Alkuun":
+                alanappi.setVisible(true);
+                this.kirjoita("Käyttäjätunnus:");
+                this.muutaNappi("Kirjaudu");
+                break;
         }
         revalidate();
         repaint();

@@ -23,14 +23,16 @@ public class SuosikkiLahella {
     private Point sijaintiKuvassa;
     private Kartta karttaNyt;
     private ImageIcon suosikkiIkoni;
+    private Toimija suosikkiToimija;
     
  
         
     
 
-    public SuosikkiLahella(int nro, LatLng sij, Kartta k) {
+    public SuosikkiLahella(int nro, LatLng sij, Kartta kartta, Toimija lemppari) {
+        this.suosikkiToimija = lemppari;
         this.numero = nro;
-        this.karttaNyt = k;
+        this.karttaNyt = kartta;
         this.sijaintiKuvassa = this.maaritaKuvaan(sij);
         this.suosikkiIkoni = new ImageIcon("sydanpinni.png",
             "Sijaintimerkki varustettuna sydämellä.");
@@ -43,7 +45,7 @@ public class SuosikkiLahella {
         suosikkiLabel.setOpaque(true);
     }
 
-    public Point maaritaKuvaan(LatLng koord) {
+    private Point maaritaKuvaan(LatLng koord) {
         this.sijaintiKuvassa.setLocation(koord.lat - karttaNyt.getLansiraja() * 1024,
                 koord.lng - karttaNyt.getEtelaraja() * 1024);
         return this.sijaintiKuvassa;
@@ -59,5 +61,13 @@ public class SuosikkiLahella {
     
     public Point getSijaintiKuvassa() {
         return this.sijaintiKuvassa;
+    }
+
+    public String getKuvaus() {
+        return this.suosikkiToimija.getKuvaus();
+    }
+
+    public String getNimi() {
+        return this.suosikkiToimija.getNimi();
     }
 }

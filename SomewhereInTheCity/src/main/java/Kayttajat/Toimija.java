@@ -85,11 +85,20 @@ public class Toimija extends Kayttaja {
         }
         return ok;
     }
+    
+    @Override
+    public String toString() {
+        return this.getNimi();
+    }
 
     public static void main(String[] args) {
         luoMalliToimijat();
         System.out.println(toimijaTunnusOlemassa("susu"));
 
+    }
+
+    public String getKuvaus() {
+        return this.kuvaus;
     }
 
 }

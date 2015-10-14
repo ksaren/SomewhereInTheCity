@@ -72,7 +72,7 @@ public class YlaPaneeli extends JLayeredPane {
      */
     public class MerkkiPaneeli extends JPanel {
 
-        private ArrayList<SuosikkiLahella> suosikitLahella;
+        ArrayList<SuosikkiLahella> suosikitLahella;
         private final ImageIcon omaPaikkaIkoni;
         private SuosikkiMerkki suosikkimerkki;
         private Dimension kartanKoko;
@@ -113,30 +113,29 @@ public class YlaPaneeli extends JLayeredPane {
             super.setPreferredSize(kartanKoko);
         }
 
-        public boolean suosikitPaneeliin() {
-            return true;
-        }
+        
 
         /**
          * Metodi joka tutkii onko asiakkaan suosikkitoimijoita kartan alueella
          * ja jos on, asettaa kartalle markkerin vastaavalle paikalle.*
          */
-        private boolean asetaSuosikitPaneeliin(Kayttaja ka, Kartta k) {
-            if (ka.getClass().equals(Asiakas.class)) {
+        public boolean asetaSuosikitPaneeliin(Kayttaja kayttaja, Kartta kartta) {
+            if (kayttaja.getClass().equals(Asiakas.class)) {
             LatLng sijainti = new LatLng(0.0, 0.0);
-            Asiakas a = (Asiakas)ka;
+            Asiakas a = (Asiakas)kayttaja;
             this.suosikitLahella.clear();
             int i = 1;
             for (Toimija lemppari : a.getSuosikit()) {
                 sijainti = lemppari.getSijainti().getKoordinaatit();
-                if (k.onkoKartalla(sijainti)) {
-                    suosikitLahella.add(new SuosikkiLahella(i, sijainti, k));
+                if (kartta.onkoKartalla(sijainti)) {
+                    suosikitLahella.add(new SuosikkiLahella(i, sijainti, kartta, lemppari));
                     i++;
                 }
             }
             if (!suosikitLahella.isEmpty()) {
                 //aseta jLabelit paikoilleen paneeliin
                 JLabel asetettava = new JLabel("");
+                System.out.println("suosikitLahella ei oo tyhjä");
                 for (SuosikkiLahella lahiSuosikki : suosikitLahella) {
                     asetettava = lahiSuosikki.getSuosikkiLabel();
                     this.add(asetettava);
