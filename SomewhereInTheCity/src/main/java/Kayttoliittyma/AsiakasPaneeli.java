@@ -26,10 +26,11 @@ public class AsiakasPaneeli extends JPanel implements ActionListener {
 
     private JPanel nappiAlue;
     private JPanel valikkoAlue;
-    private JList suosikkiAlue;
+    private DefaultListModel listamalli;
+    private JList graafLista;
     private JScrollPane suosikkiScrollausAlue;
     private JButton lisaaSuosikki;
-    private JButton paivita;
+    private JTextArea suosikkini;
     private ImageIcon tahtimerkki;
     private JLabel nimiLabel;
     private JLabel valikonOtsikko;
@@ -47,11 +48,13 @@ public class AsiakasPaneeli extends JPanel implements ActionListener {
         this.lisaaSuosikki = new JButton(tahtimerkki);
         this.valikonOtsikko = new JLabel("Kaikki yritykset:");
 
+        this.suosikkini = new JTextArea("Suosikkini: \n");
         this.nimiLabel = new JLabel("Käyttäjä:\n" + aktiivi.getNimi());
         this.nimiLabel.setSize(60, 300);
 
-        this.nappiAlue = new JPanel(new FlowLayout());
-        nappiAlue.add(nimiLabel);
+        this.nappiAlue = new JPanel(new BorderLayout());
+        nappiAlue.add(nimiLabel, "North");
+        nappiAlue.add(suosikkini, "South");
 
         this.valikkoAlue = new JPanel(new BorderLayout());
         valikkoAlue.add(suosikkiScrollausAlue, "South");
@@ -66,34 +69,28 @@ public class AsiakasPaneeli extends JPanel implements ActionListener {
     }
 
     private void rakennaToimijaValikko() {
-        this.suosikkiAlue = new JList();
-        this.suosikkiAlue.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.suosikkiAlue.setSize(100, 200);
-        this.suosikkiScrollausAlue = new JScrollPane(suosikkiAlue);
+        this.listamalli = new DefaultListModel();
+        this.graafLista = new JList(listamalli);
+        this.graafLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.graafLista.setSize(100, 200);
+        this.suosikkiScrollausAlue = new JScrollPane(graafLista);
         this.suosikkiScrollausAlue.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         this.suosikkiScrollausAlue.setMinimumSize(new Dimension(200, 100));
-        
-        suosikkiAlue.addListSelectionListener(new ListSelectionListener() {
-                
-                
-    @Override
-    public void valueChanged(ListSelectionEvent e)
-    {
-        if(!e.getValueIsAdjusting()) {
-            final Toimija valittu =  (Toimija) suosikkiAlue.getSelectedValue();
-            System.out.println(valittu);
-        }
-    }
-        });
 
-            
-        
+       /* graafLista.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                }
+            }
+        } );*/
         this.toimijatValikkoon();
 
     }
 
     public void toimijatValikkoon() {
-        this.suosikkiAlue.setListData(Toimijat.kaikkiToimijat().toArray());
+        this.graafLista.setListData(Toimijat.kaikkiToimijat().toArray());
     }
 
     private ImageIcon pienennaKuva(ImageIcon pienennettava) {
@@ -108,15 +105,14 @@ public class AsiakasPaneeli extends JPanel implements ActionListener {
             case "suosikki":
                 System.out.println(aktiivi.getSuosikit());
                 for (Toimija t : kaikkiToimijat()) {
-                    if (suosikkiAlue.getSelectedValue().equals(t)) {
-                        aktiivi.setSuosikki(t);
-                        System.out.println(aktiivi.getSuosikit());
-
+                    if (graafLista.getSelectedValue().equals(t)) {
+                        if (aktiivi.setSuosikki(t)) {
+                            this.suosikkini.append(t.getNimi() + "\n"); 
+                        }
                     }
-                    System.out.println(t);
                 }
                 break;
-                
+
         }
     }
 

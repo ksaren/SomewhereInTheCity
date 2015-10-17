@@ -16,13 +16,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-/** Luokka joka sisältää graafisen kirjautumisikkunan. Onnistunut kirjautuminen on edellytys 
- * varsinaisen ohjelmaikkunan avaamiselle.
+/**
+ * Luokka joka sisältää graafisen kirjautumisikkunan. Onnistunut kirjautuminen
+ * on edellytys varsinaisen ohjelmaikkunan avaamiselle.
  *
  * @author kaisa
  */
 public class KirjautumisIkkuna extends JFrame implements ActionListener {
-    
+
     //Käyttöliittymäkomponentteja
     private JPanel kirjautumisPaneeli;
     private JButton OKnappi;
@@ -30,7 +31,6 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
     private JTextField kirjautumisTekstikentta;
     private JButton alanappi;
     private JButton lopeta;
-    private JButton demo;
 
     //Tapahtumankäsittelyssä tarvittavia muuttujia
     Kayttaja k;
@@ -40,7 +40,7 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
     String uudSalasana;
     boolean ruokatoimija;
     boolean tunnistusOK = false;
-    
+
     public KirjautumisIkkuna() {
         this.setLayout(new BorderLayout());
         this.setBackground(Color.GRAY);
@@ -50,48 +50,30 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
         this.kirjAputeksti = new JLabel("Käyttäjätunnus:");
         this.kirjautumisTekstikentta = new JTextField(20);
         this.alanappi = new JButton("Uusi käyttäjä?");
-        this.demo = new JButton("Käytä demoversiota");
         this.lopeta = new JButton("Lopeta");
-        
+
         OKnappi.addActionListener(this);
         alanappi.addActionListener(this);
         lopeta.addActionListener(this);
-        demo.addActionListener(this);
-        
+
         kirjautumisPaneeli.add(kirjAputeksti);
         kirjautumisPaneeli.add(kirjautumisTekstikentta);
         kirjautumisPaneeli.add(OKnappi);
         kirjautumisPaneeli.add(alanappi);
         kirjautumisPaneeli.add(lopeta);
-        kirjautumisPaneeli.add(demo);
-        demo.setVisible(false);
-        
+
         this.add(kirjautumisPaneeli, "Center");
-        this.setMinimumSize(new Dimension(500,100));
+        this.setMinimumSize(new Dimension(500, 100));
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            
+
             case "Lopeta":
                 dispose();
                 break;
-            
-            case "Käytä demoversiota":
-                try {
-                if (k.getClass().equals(Asiakas.class)) {
-                    Asiakas a = (Asiakas)k;
-                    a.luoMalliSuosikit();
-                } else if (k.getClass().equals(Toimija.class)) {
-                    Toimija t = (Toimija)k;
-                } else throw new RuntimeException("Ongelma käyttäjän tunnistamisessa.");
-                } catch (RuntimeException rE) {
-                    this.virheIlmo(rE.getMessage());
-                    dispose();
-                }
-                break;
-                
+
             case "Kirjaudu":
                 alanappi.setVisible(false);
                 kTunnus = kirjautumisTekstikentta.getText();
@@ -109,7 +91,7 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                     this.muutaNappi("Valmis");
                 }
                 break;
-            
+
             case "Valmis":
                 salasana = kirjautumisTekstikentta.getText();
                 if (!salasana.equals(k.getSalasana())) {
@@ -118,7 +100,6 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                 } else {
                     this.kirjoita("Käyttäjä tunnistettu!");
                     this.muutaNappi("Käynnistä ohjelma");
-                    demo.setVisible(true);
                     lopeta.setVisible(false);
                     kirjautumisTekstikentta.setVisible(false);
                     break;
@@ -129,7 +110,7 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                 this.setVisible(false);
                 OhjelmaIkkuna.gui(this.k);
                 break;
-            
+
             case "Uusi käyttäjä?":
                 alanappi.setVisible(false);
                 kTunnus = kirjautumisTekstikentta.getText();
@@ -161,27 +142,35 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                 break;
             case "Salasana OK":
                 salasana = kirjautumisTekstikentta.getText();
-                this.kirjoita("Salasana uudelleen:");
-                this.muutaNappi("Valmista");
+                if (salasana.length() >= 6) {
+                    this.kirjoita("Salasana uudelleen:");
+                    this.muutaNappi("Valmista");
+                } else {
+                    this.kirjoita("Liian lyhyt salasana. Yritä uudelleen:");
+                }
                 break;
             case "Valmista":
                 uudSalasana = kirjautumisTekstikentta.getText();
-                try {
-                    if (ruokatoimija) {
-                        k = new Toimija(nimi, kTunnus, salasana, uudSalasana);
-                    } else {
-                        k = new Asiakas(nimi, kTunnus, salasana, uudSalasana);
+                if (uudSalasana.length() < 6 || !salasana.equals(uudSalasana)) {
+                    this.kirjoita("Liian lyhyt salasana tai salasanat eivät täsmää. Yritä uudelleen:");
+                    this.muutaNappi("Salasana OK");
+                } else {
+                    try {
+                        if (ruokatoimija) {
+                            k = new Toimija(nimi, kTunnus, salasana, uudSalasana);
+                        } else {
+                            k = new Asiakas(nimi, kTunnus, salasana, uudSalasana);
+                        }
+                    } catch (Exception ex) {
+                        this.kirjoita("Tilin luonti ei onnistunut. Joko salasanat eivät täsmää, tai nimi, "
+                                + "käyttäjätunnus tai salasana on jo käytössä.");
+                        this.muutaNappi("Alkuun");
+                        break;
                     }
-                } catch (Exception ex) {
-                    //ok = false;
-                    this.kirjoita("Tilin luonti ei onnistunut. Joko salasanat eivät täsmää, tai nimi, "
-                            + "käyttäjätunnus tai salasana on jo käytössä.");
-                    this.muutaNappi("Alkuun");
-                    break;
+                    this.kirjoita("Tunnukset luotu. Kirjaudu nyt sisään.");
+                    this.muutaNappi("Kirjaudu");
                 }
-                this.kirjoita("Tunnukset luotu. Kirjaudu nyt sisään.");
-                this.muutaNappi("Kirjaudu");
-                
+
                 break;
             case "Alkuun":
                 alanappi.setVisible(true);
@@ -210,13 +199,13 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
         this.OKnappi.setText(teksti);
         repaint();
     }
-    
+
     public Kayttaja getKayttaja() {
         return this.k;
     }
-    
+
     /**
-     * "gui"-metodi, joka rakentaa kirjautumisikkunan. 
+     * "gui"-metodi, joka rakentaa kirjautumisikkunan.
      */
     protected void kirjaudu() {
         this.pack();
@@ -225,12 +214,11 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
-    
-    
+
     private void virheIlmo(String virhe) {
         JOptionPane.showMessageDialog(this, virhe);
     }
-    
+
     public static void main(String[] args) {
         luoMalliAsiakkaat();
         luoMalliToimijat();
@@ -242,17 +230,13 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
         });
     }
 }
-        /*WindowStateListener ikkunaVahti = new WindowStateListener() {
+/*WindowStateListener ikkunaVahti = new WindowStateListener() {
 
-         @Override
-         public void windowStateChanged(WindowEvent e) {
-         if (l.isVisible() == false) {
+ @Override
+ public void windowStateChanged(WindowEvent e) {
+ if (l.isVisible() == false) {
                     
-         } else 
+ } else 
                     
-         }
-         };*/
-
-        
-                
-      
+ }
+ };*/

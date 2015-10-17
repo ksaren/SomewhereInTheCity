@@ -18,6 +18,16 @@ public class Toimijat implements Serializable {
 
     private static Set<Toimija> toimijat = new HashSet();
 
+    
+    public static Toimija toimijanTiedotOlemassa(String tunnus, String nimi) {
+        for (Toimija t : toimijat) {
+            if (t.getTunnus().equals(tunnus) || t.getNimi().equals(nimi)) {
+                return t;
+            }
+        }
+        return null;
+    }
+    
     /**Metodi tutkii onko toimijaa jo tallennettuna, jos on, palauttaa kyseisen Toimijan. Palauttaa 
      * nullin jos käyttäjätunnusta ei löydy.*/
     public static Toimija toimijaTunnusOlemassa(String tunnus) {

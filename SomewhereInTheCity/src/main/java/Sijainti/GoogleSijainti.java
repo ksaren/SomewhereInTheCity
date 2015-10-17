@@ -19,18 +19,19 @@ import java.util.Random;
 
 public class GoogleSijainti {
 
-    //LatLng säilöö koordinaatit kahdelle globaalille double-kentälle
+    /**LatLng säilöö koordinaatit kahdelle globaalille double-kentälle.**/
     private LatLng omaSijainti;
 
     private boolean paikannettu = false;
 
-    //joitain sattumanvaraisia koordinaatteja Helsingistä testailuun, saa lisäillä!
+    /**joitain sattumanvaraisia koordinaatteja Helsingistä testailuun jos reaaliaikainen paikannus 
+     * ei onnistu.*/
     private final int taulukonKoko = 30;
     private double[] randomLatitudi = new double[taulukonKoko];
     private double[] randomLongitudi = new double[taulukonKoko];
 
-    /*API-avainta tarvitaan GoogleAPI:en käyttöön, niitä voi luoda 
-     googlen Developers-sivuilla*/
+    /**Kenttä GoogleAPI-avaimille, API-avainta tarvitaan GoogleAPI:en käyttöön, niitä voi luoda 
+     googlen Developers-sivuilla. Ei vielä käytössä ohjelmassa. */
     private HashMap<String, String> APIkeys = new HashMap();
 
     public GoogleSijainti() {
@@ -44,7 +45,7 @@ public class GoogleSijainti {
     }
 
     /**
-     * asettaa sijainnin parametrien mukaan jos parametrit ok, muuten arpoo*
+     * Metodi asettaa sijainnin parametrien mukaan jos parametrit ok, muuten arpoo sijainnin.
      */
     public GoogleSijainti(double lat, double lng) {
         this.luoRandomSijainnit();
@@ -64,7 +65,7 @@ public class GoogleSijainti {
     }
 
     /**
-     * yhdistää sattumanvaraisen pituus- ja leveyspiirin ko. randomlistoilta*
+     * yhdistää sattumanvaraisen pituus- ja leveyspiirin randomlistoilta.
      */
     public boolean arvoOmaSijainti() {
         try {
@@ -80,7 +81,7 @@ public class GoogleSijainti {
         }
     }
 
-    /**Lisää 40-merkkisen avaimen HashMapiin*/
+    //Lisää 40-merkkisen API-avaimen HashMapiin
     public boolean setKey(String nimi, String avain) {
         if (nimi != null && avain != null && avain.length() == 40) {
             APIkeys.put(nimi, avain);
@@ -108,8 +109,7 @@ public class GoogleSijainti {
     }
 
     /**
-     * testivaiheen metodi, arpoo toistaiseksi sijainnin mutta tarkoitus olisi
-     * myöhemmin paikantaa oikeasti.*
+     * Testivaiheen metodi, arpoo sijainnin.*
      */
     public boolean setSijainti() {
         return this.arvoOmaSijainti();
@@ -126,7 +126,7 @@ public class GoogleSijainti {
         return this.omaSijainti;
     }
 
-    //testailuun
+    //testailuun, poistetaan lopuksi!
     public static void main(String[] args) {
         GoogleSijainti gs = new GoogleSijainti();
         System.out.println(gs.getKoordinaatit());

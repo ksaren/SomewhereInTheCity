@@ -22,7 +22,7 @@ public class Toimija extends Kayttaja {
 
     public Toimija(String nimi, String tunnus, String salasana, String uudSalasana) {
         super(nimi, tunnus, salasana, uudSalasana);
-        if (toimijat.toimijaTunnusOlemassa(this.getTunnus()) == null) {
+        if (toimijat.toimijanTiedotOlemassa(this.getTunnus(), this.getNimi()) == null) {
             try {
                 this.toimijaListalle(this);
                 System.out.println("Toimija lisatty.");//testaus
@@ -32,9 +32,8 @@ public class Toimija extends Kayttaja {
             }
 
         } else {
-            //voisko tässä lähettää jonkun virheilmon ja vaatia uuden nimen..?
-            this.setNimi("Uusi Toimija");
-            System.out.println("Nimi on jo listalla.");
+            throw new AlreadyDefinedException("Toimija on jo listalla.");
+            
         }
 
     }
@@ -56,7 +55,9 @@ public class Toimija extends Kayttaja {
     }
 
     /**
-     * Luokkametodi jolla poistetaan toimija toimijat-listalta.*
+     * Luokkametodi jolla poistetaan toimija toimijat-listalta.
+     *
+     *
      * @param poistettava
      */
     public static boolean poistaToimija(Toimija poistettava) {
@@ -69,50 +70,56 @@ public class Toimija extends Kayttaja {
     }
 
     /**
-     * Luokkametodi jolla luodaan esimerkkitoimijoita ohjelman alussa. Demo-käyttöön.
-     * 
-     * @return 
+     * Luokkametodi jolla luodaan esimerkkitoimijoita ohjelman alussa.
+     * Demo-käyttöön kun olioiden tallennus ei vielä toimi.
+     *
+     * @return onnistuiko lisäys
      */
     public static boolean luoMalliToimijat() {
         boolean ok = true;
         try {
             Toimija t1 = new Toimija("Suvin Sumppila", "susu", "pannukuuma", "pannukuuma");
             t1.setKuvaus("Suloisia suosikkikahvejasi Suvin kärrystä.");
+            t1.setStatus(true);
             Toimija t2 = new Toimija("Testaamo", "tm", "password", "password");
             t2.setKuvaus("Innovatiiviset fuusiokokeilut läheltä.");
+            t1.setStatus(true);
             Toimija t3 = new Toimija("Helppo Hodari", "hh", "lallallaa", "lallallaa");
             t3.setKuvaus("Hyviä hodareita lähinakeilla.");
+            t3.setStatus(true);
             Toimija t4 = new Toimija("GrilliPyörä", "gr", "moikkis", "moikkis");
             t4.setKuvaus("Klassista kunnon grilliruokaa, vie takuulla nälän!");
+            t4.setStatus(true);
             Toimija t5 = new Toimija("Taunon taikku", "taikku", "tairuokaa", "tairuokaa");
             t5.setKuvaus("Taimaalaista Taunon tapaan. Päivän tarjous kanaa!");
+            t5.setStatus(true);
             Toimija t6 = new Toimija("Hamppari Oy", "hamppari", "hhhhhh", "hhhhhh");
             t6.setKuvaus("Gourmethampurilaisia parhaista kauden aineksista.");
             Toimija t7 = new Toimija("Kuutosen pitsa", "pitsa6e", "poliisionystava", "poliisionystava");
-            t7.setKuvaus("Täytteenä veronkiertoa, halpatyötä ja kurjia aineksia. Kysy MaRa-versiota tai kuittia!");
-            
+            t7.setKuvaus("Täytteenä veronkiertoa, halpatyötä ja kurjia aineksia. Kysy upeaa MaRa-versiota tai kuittia!");
+            t7.setStatus(true);
+
         } catch (Exception e) {
             ok = false;
         }
         return ok;
     }
-    
+
     public String getKuvaus() {
         return this.kuvaus;
     }
-    
-    
+
+    public boolean getStatus() {
+        return this.aukiVaiEi;
+    }
+
     public void setStatus(boolean avoinna) {
         this.aukiVaiEi = avoinna;
     }
-    
+
     @Override
     public String toString() {
         return this.getNimi();
     }
-
-
-    
-
 
 }

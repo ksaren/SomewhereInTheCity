@@ -1,0 +1,17 @@
+**Testausdokumentti**
+Somewhere in the city
+
+Kirjautuminen:
+
+1. Syötetään kaikkiin kenttiin tyhjää:
+- Ohjelma luo käyttäjäolion ja asettaa sen oletuksena asiakastyyppiseksi. Kirjautumisen lopuksi ohjelma antaa virheilmoituksen epäonnistuneesta kirjautumisesta ja pyytää yrittämään alusta.
+
+2. Syötetään kaikki arvot kuten on ajateltu. Käyttäjätunnus on vapaa:
+- Sekä ruokatoimijan että asiakkaan luonti onnistuvat normaalisti.
+
+3. Salasanansyöttövirheet:
+- Uutta käyttäjää luodessa ohjelma hyväksyy salasanan vain jos se on väh. 6 merkkiä ja salasana on molemmilla syöttökerroilla sama.
+
+4. Luodaan uusi käyttäjä olemassaolevilla tiedoilla:
+- 
+

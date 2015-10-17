@@ -17,8 +17,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/**
- *
+/** Luokka joka tallentaa senhetkisen sijainnin mukaisen kartan kuvana. Omistaa myös sijaintitiedot ko. kartan alueelta.
+ *  Huom! kartta on speksattu pohjoisille leveyksille ja itäisille pituuksille kartan 
+     zoom-tasolla 15!
  * @author kaisa
  */
 public class Kartta {
@@ -28,13 +29,11 @@ public class Kartta {
     private GoogleSijainti sijainti;
     private URL URLolio;
 
-    //vakioidaan tässä vaiheessa Google-kartan muut tiedot paitsi sijainti
     private final String URLalku = "http://maps.google.com/maps/api/staticmap?center=";
     private final String URLloppu = "&zoom=15&size=1024x1024&maptype=roadmap";
     private final String oletusSijainti = "Helsinki,Finland";
     private final double keskeltaReunaan = 0.015;
-    /*Huom! ao. rajat speksattu pohjoisille leveyksille ja itäisille pituuksille kartan 
-     zoom-tasolla 15!*/
+   
     private double lansiraja;
     private double itaraja;
     private double pohjoisraja;
@@ -50,14 +49,28 @@ public class Kartta {
         }
     }
 
+    /** Metodi palauttaa oletussijainnin Helsingin rautatieasemalta, käytetään jos karttaa ei saada 
+     * päivitettyä.
+     * 
+     * @return Sivuosoite merkkijonona URL-oliota varten.
+     */
     public String setURL() {
         return URLalku + oletusSijainti + URLloppu;
     }
 
+    /** Metodi asettaa URL-osoitteen sopivaksi kartanhakua varten Googlen karttapalvelusta. 
+     * 
+     * @return Sivuosoite merkkijonona URL-oliota varten.
+     */
     public String setURL(String osoite) {
         return URLalku + osoite + URLloppu;
     }
 
+     /** Metodi asettaa URL-osoitteen sopivaksi kartanhakua varten Googlen karttapalvelusta 
+      * annettujen koordinaattien mukaan.
+      * 
+      * @return Sivuosoite merkkijonona URL-oliota varten.
+     */
     public String setURL(LatLng koordinaatit) {
         String Lat, Lon;
         try {
@@ -69,15 +82,21 @@ public class Kartta {
         }
     }
 
+    /** Metodi tallentaa senhetkisen sijainnin rajat. Rajojen perusteella tutkitaan onko Toimija-olio 
+     * asiakkaan lähellä.
+     * 
+     * @return false jos koordinaattien haku tuottaa poikkeuksen.
+     * 
+     */
     public boolean setRajat() {
         try {
-            this.lansiraja = sijainti.getKoordinaatit().lat
-                    + keskeltaReunaan;
-            this.itaraja = sijainti.getKoordinaatit().lat
+            this.lansiraja = sijainti.getKoordinaatit().lng
                     - keskeltaReunaan;
-            this.pohjoisraja = sijainti.getKoordinaatit().lng
+            this.itaraja = sijainti.getKoordinaatit().lng
                     + keskeltaReunaan;
-            this.etelaraja = sijainti.getKoordinaatit().lng
+            this.pohjoisraja = sijainti.getKoordinaatit().lat
+                    + keskeltaReunaan;
+            this.etelaraja = sijainti.getKoordinaatit().lat
                     - keskeltaReunaan;
             return true;
         } catch (Exception e) {
@@ -102,9 +121,15 @@ public class Kartta {
         return this.etelaraja;
     }
 
-    public boolean paivitaKartta() {//Myöh. parametreilla
+    
+    /** Metodi asettaa kuvan (BufferedImage) rakennetun URL-osoitteen perusteella. Mikäli sijainti 
+     * paikantuisi automaattisesti, ei alun setSijainti-kutsua tarvittaisi.
+     * 
+     * @return false mikäli karttatietoja ei saada (esim. yhteysvirhe).
+     */
+    public boolean paivitaKartta() {
         try {
-            sijainti.setSijainti(); //testivaiheessa arpoo, myöh parametreilla!
+            sijainti.setSijainti();
             URLolio = new URL(this.setURL(sijainti.getKoordinaatit()));
             this.map = ImageIO.read(URLolio);
             this.bufMap = bufferiKuvaksi(map);
@@ -116,11 +141,23 @@ public class Kartta {
         }
     }
 
+    
+    /** Metodi tutkii onko annettu sijainti karttarajojen sisäpuolella.
+     * 
+     * @param koordinaatit
+     * @return tosi, jos koordinaatit ovat kartalla.
+     */
     public boolean onkoKartalla(LatLng koordinaatit) {
-        if (koordinaatit.lat >= this.lansiraja
-                && koordinaatit.lat <= this.itaraja
-                && koordinaatit.lng <= this.pohjoisraja
-                && koordinaatit.lng >= this.etelaraja) {
+        System.out.println("Lat: " + koordinaatit.lat + "  Lon: " + koordinaatit.lng );
+        System.out.println("Länsiraja: " + this.lansiraja);
+        System.out.println("Itäraja: " + this.itaraja);
+        System.out.println("Eteläraja: " + this.etelaraja);
+        System.out.println("Pohjoisraja: " + this.pohjoisraja);
+        if (koordinaatit.lat >= this.etelaraja
+                && koordinaatit.lat <= this.pohjoisraja
+                && koordinaatit.lng <= this.itaraja
+                && koordinaatit.lng >= this.lansiraja) {
+            System.out.println("kartalla on!");
             return true;
         } else {
             return false;
@@ -132,7 +169,10 @@ public class Kartta {
     }
 
     /**
-     * Metodi joka muuntaa Image-kuvan BufferedImage:ksi*
+     * Metodi joka muuntaa Image-kuvan BufferedImage:ksi
+     * 
+     * @param Image
+     * @return BufferedImage
      */
     public static BufferedImage bufferiKuvaksi(Image kuva) {
         BufferedImage bKuva = new BufferedImage(kuva.getWidth(null), kuva.getHeight(null), BufferedImage.TYPE_INT_ARGB);
@@ -148,7 +188,7 @@ public class Kartta {
         
 
 
-    //Testataan että kartta toimii...
+    //Testataan että kartta toimii... poistoon lopuksi
     public static void main(String[] args) {
         System.out.println("Main:");
         //Kartta testikartta = new Kartta("http://maps.google.com/maps/api/staticmap?center=Helsinki,Finland&zoom=15&size=1024x1024&maptype=roadmap");

@@ -17,12 +17,12 @@ import static org.junit.Assert.*;
  */
 public class ToimijaTest {
 
-    private static Toimija tm, tr;
+    private static Toimija tm, tr, tp;
 
     @Test
     public void konstruktoriTest() {
-        tm = new Toimija("Suvin Sumppila", "susu", "pannukuuma", "pannukuuma");
-        assertEquals("Suvin Sumppila",tm.getNimi());
+        tp = new Toimija("FineFillari", "fifi", "dining", "dining");
+        assertEquals("FineFillari",tp.getNimi());
     }
 
     @Before
@@ -33,13 +33,16 @@ public class ToimijaTest {
     @After
     public void tearDown() {
         poistaToimija(tm);
+        poistaToimija(tr);
         tm = null;
+        tr = null;
     }
     
     @Test
     public void toimijaOnJoListallaTest() {
-        toimijaListalle(tm);
-        assertEquals(toimijaListalle(tm), false);
+         tr = new Toimija("Kallen Kahvila", "fressi", "tosihyva", "tosihyva");
+         System.out.println("tr luotu");
+        assertEquals(toimijaListalle(tr), false);
     }
     
        public void yksiLisaaAsiakkailla() {

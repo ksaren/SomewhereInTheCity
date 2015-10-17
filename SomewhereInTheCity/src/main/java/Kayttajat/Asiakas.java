@@ -25,20 +25,15 @@ public class Asiakas extends Kayttaja {
             throws AlreadyDefinedException {
         super(nimi, tunnus, salasana, uudSalasana);
         if (asiakkaat.asiakasTunnusOlemassa(this.getTunnus()) == null) {
-            try {
                 asiakasListalle(this);
                 System.out.println("Asiakas lisatty.");//testaus
                 this.setNro(seuraavaKayttaja());
-            } catch (Exception e) {
-                System.out.println("Asiakkaan lisäys ei onnistu.");
-            }
-
         } else {
             throw new AlreadyDefinedException("Asiakas on jo listalla.");
         }
 
     }
-    /** Metodi jolla asiakas voi tallentaa suosikkitoimijoitaan.**/
+    /** Metodi jolla asiakas voi tallentaa suosikkitoimijoitaan. Palauttaa epätoden jos suosikki on jo listalla.**/
     public boolean setSuosikki(Toimija lemppari) {
         if (this.suosikit.add(lemppari) && lemppari != null) {
             return true;
@@ -51,7 +46,8 @@ public class Asiakas extends Kayttaja {
         return this.suosikit;
     }
     
-    /** Luokkametodi jolla lisätään asiakas asiakkaat-joukkoon ja kasvattaa käyttäjälaskuria yhdellä.**/
+    /** Luokkametodi jolla lisätään asiakas asiakkaat-joukkoon ja kasvattaa käyttäjälaskuria yhdellä.
+     */
     public static boolean asiakasListalle(Asiakas uusiAsiakas) {
         if (asiakkaat.lisaa(uusiAsiakas)) {
             yksiKayttajaLisaa();
@@ -60,7 +56,8 @@ public class Asiakas extends Kayttaja {
             return false;
         }
     }
-    /** Luokkametodi jolla poistetaan asiakas asiakkaat-joukosta.**/
+    /** Luokkametodi jolla poistetaan asiakas asiakkaat-joukosta.
+     */
     public static boolean poistaAsiakas(Asiakas poistettava) {
         if (asiakkaat.poista(poistettava)) {
             System.out.println("Toimija " + poistettava + " poistettu");
@@ -71,7 +68,7 @@ public class Asiakas extends Kayttaja {
     }
     /** Luokkametodi jolla voi ohjelman alussa luoda malliasiakkaita 
      * ohjelman testikäyttöä varten.
-     **/
+     */
     public static boolean luoMalliAsiakkaat() {
         boolean ok = true;
         try {
@@ -84,17 +81,6 @@ public class Asiakas extends Kayttaja {
         }
         return ok;
     }
-    
-    /** Metodi joka lisää asiakkaalle pari suosikkitoimijaa mallitoimijoiden joukosta. 
-     *  Toimii jos on ensin luotu malliToimijat.**/
-    public boolean luoMalliSuosikit() {
-        try {
-        this.setSuosikki(toimijaTunnusOlemassa("susu"));
-        this.setSuosikki(toimijaTunnusOlemassa("tm"));
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
+   
 
 }
