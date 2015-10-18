@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
  * @author kaisa
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({inthecity.InthecitySuite.class, Sijainti.SijaintiSuite.class,  Logiikka.LogiikkaSuite.class})
+@Suite.SuiteClasses({inthecity.InthecitySuite.class, Sijainti.SijaintiSuite.class})
 public class RootSuite {
 
     @BeforeClass

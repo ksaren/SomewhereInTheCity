@@ -5,12 +5,9 @@
  */
 package Kayttajat;
 
-import static Kayttajat.Toimijat.toimijaTunnusOlemassa;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
- * Luokka ruokatoimijoiden tallennukseen.
+ * Luokka ruokatoimijoiden tallennukseen. Tarjoaa toimijan omat metodit, kuten toiminnan tilan 
+ * (auki/kiinni) päivityksen ja promotekstien asettamisen.
  *
  * @author kaisa
  */
@@ -23,23 +20,19 @@ public class Toimija extends Kayttaja {
     public Toimija(String nimi, String tunnus, String salasana, String uudSalasana) {
         super(nimi, tunnus, salasana, uudSalasana);
         if (toimijat.toimijanTiedotOlemassa(this.getTunnus(), this.getNimi()) == null) {
-            try {
                 this.toimijaListalle(this);
-                System.out.println("Toimija lisatty.");//testaus
                 this.setNro(seuraavaKayttaja());
-            } catch (Exception e) {
-                System.out.println("Toimijan lisäys ei onnistu.");
-            }
-
         } else {
             throw new AlreadyDefinedException("Toimija on jo listalla.");
-            
         }
-
     }
 
+    /** Kuvaustekstin asetusmetodi, joka samalla lisää tekstiin rivinvaihdon 35 merkin välein.
+     * 
+     * @param kuvausteksti 
+     */
     public void setKuvaus(String kuvausteksti) {
-        this.kuvaus = kuvausteksti;
+         this.kuvaus = kuvausteksti.replaceAll("(.{35})", "$1\n");
     }
 
     /**
@@ -57,8 +50,8 @@ public class Toimija extends Kayttaja {
     /**
      * Luokkametodi jolla poistetaan toimija toimijat-listalta.
      *
-     *
      * @param poistettava
+     * @return tosi, jos toimija on listalla ja poisto onnistuu.
      */
     public static boolean poistaToimija(Toimija poistettava) {
         if (toimijat.poista(poistettava)) {
@@ -71,7 +64,7 @@ public class Toimija extends Kayttaja {
 
     /**
      * Luokkametodi jolla luodaan esimerkkitoimijoita ohjelman alussa.
-     * Demo-käyttöön kun olioiden tallennus ei vielä toimi.
+     * Demo-käyttöön kun olioiden tallennus ei ole käytössä.
      *
      * @return onnistuiko lisäys
      */

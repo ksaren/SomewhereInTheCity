@@ -80,8 +80,6 @@ public class YlaPaneeli extends JLayeredPane {
         private Dimension labelinKoko;
         private JLabel omaLabel;
         private Asiakas asKayttaja;
-        private Point omaPaikka;
-        //private Insets insets;
 
         public MerkkiPaneeli(Asiakas a, Dimension koko) {
             this.kartanKoko = koko;
@@ -116,16 +114,6 @@ public class YlaPaneeli extends JLayeredPane {
 
         @Override
         public void paintComponent(Graphics g) {
-            /* super.paintComponent(g);
-             System.out.println("mp: paint");
-             //this.setOpaque(false);//läpinäkyvä
-             //this.add(omaLabel);
-             /*if (toimKayttaja == null) {
-             this.asetaSuosikitPaneeliin(asKayttaja, karttapaneeli.karttaKuva);
-             }
-             revalidate();
-             repaint();*/
-
         }
 
         /**
@@ -135,6 +123,8 @@ public class YlaPaneeli extends JLayeredPane {
             super.setPreferredSize(kartanKoko);
         }
 
+        /** Metodi joka asettaa omaa sijaintia kuvaavan markkerin kuvan keskelle.
+         */
         public void asetaOmaLabel() {
             int labelY = (int) Math.round(kartanKoko.getHeight() / 2);
             int labelX = (int) Math.round((kartanKoko.getWidth()) / 2);
@@ -157,9 +147,7 @@ public class YlaPaneeli extends JLayeredPane {
             for (Toimija lemppari : asKayttaja.getSuosikit()) {
                 if (lemppari.getStatus() == true) {
                     sijainti = lemppari.getSijainti().getKoordinaatit();
-                    System.out.println(sijainti);
                     if (kartta.onkoKartalla(sijainti)) {
-                        System.out.println(lemppari + "n sijainti on kartalla");
                         this.suosikitLahella.add(new SuosikkiLahella(i, kartta,
                                 sijainti, lemppari));
                         i++;
@@ -169,16 +157,13 @@ public class YlaPaneeli extends JLayeredPane {
             if (!this.suosikitLahella.isEmpty()) {
                 JLabel asetettava;
                 Dimension koko;
-                System.out.println("suosikitLahella ei oo tyhjä");
                 for (SuosikkiLahella lahiSuosikki : suosikitLahella) {
                     lahiSuosikki.maaritaKuvaan(lahiSuosikki.getMaantieteellinenSijainti());
-                    System.out.println("Sijainti kuvassa: " + lahiSuosikki.getSijaintiKuvassa());
                     lahiSuosikki.rakennaLabel();
                     asetettava = lahiSuosikki.getSuosikkiLabel();
                     koko = asetettava.getPreferredSize();
                     asetettava.setBounds(lahiSuosikki.getSijaintiKuvassa().x, lahiSuosikki.getSijaintiKuvassa().y, koko.width, koko.height);
                     this.add(asetettava);
-                    System.out.println("Label luotu toimijalle " + lahiSuosikki.getNimi());
                 }
                 revalidate();
                 repaint();
@@ -238,8 +223,8 @@ public class YlaPaneeli extends JLayeredPane {
     }
 
 
-    /* Idea tähän on saatu SOF:sta, JLayeredPane ja manuaalinen layout-manager ratkaisuna siihen, että 
-     muuten JLayeredPanen JPanelit eivät näy.*/
+    /**JLayeredPanen tueksi rakennettu oma layout-manager.
+    */
     public static class AbsoluteLayoutManager implements LayoutManager {
 
         private Map<Component, Rectangle> rajat = new LinkedHashMap<Component, Rectangle>();

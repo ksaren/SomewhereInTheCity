@@ -18,7 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.DefaultCaret;
 
-/**
+/**Käyttöliittymän asiakkaan toimintoja ohjaava paneeli. Mahdollistaa suosikkitoimijoiden hallinnan.
  *
  * @author kaisa
  */
@@ -75,20 +75,14 @@ public class AsiakasPaneeli extends JPanel implements ActionListener {
         this.graafLista.setSize(100, 200);
         this.suosikkiScrollausAlue = new JScrollPane(graafLista);
         this.suosikkiScrollausAlue.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
-        this.suosikkiScrollausAlue.setMinimumSize(new Dimension(200, 100));
-
-       /* graafLista.addListSelectionListener(new ListSelectionListener() {
-
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                }
-            }
-        } );*/
+        this.suosikkiScrollausAlue.setSize(new Dimension(200, 100));
         this.toimijatValikkoon();
 
     }
 
+    /** Metodi joka vie kaikki ruokatoimijat toimija-valikkoon. Valikossa toimijoiden viitteenä 
+     * toimii niiden nimi.
+     */
     public void toimijatValikkoon() {
         this.graafLista.setListData(Toimijat.kaikkiToimijat().toArray());
     }
@@ -103,7 +97,6 @@ public class AsiakasPaneeli extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "suosikki":
-                System.out.println(aktiivi.getSuosikit());
                 for (Toimija t : kaikkiToimijat()) {
                     if (graafLista.getSelectedValue().equals(t)) {
                         if (aktiivi.setSuosikki(t)) {

@@ -11,7 +11,6 @@ import Kayttajat.Toimija;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
-import java.awt.image.*;
 import javax.swing.border.Border;
 
 /**
@@ -31,13 +30,11 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
     private Toimija toimijaKayttaja;
 
     private JButton paivitysNappi;
-    BufferedImage osImage = null;
-    Graphics gr = null;
 
     public OhjelmaIkkuna(Kayttaja k) {
         this.ohjelmanKayttaja = k;
         this.setLayout(new BorderLayout());
-        //this.setResizable(false);
+        this.setResizable(false);
         this.kaynnistaOhjelma();
 
     } //konstruktori
@@ -55,7 +52,6 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
             infoPaneeli = new InfoPaneeli();
             this.add(ylapaneeli, "West");
             this.add(infoPaneeli, "East");
-            System.out.println("asiakaspaneeli luotu");
         } else if (this.ohjelmanKayttaja.getClass().equals(Toimija.class)) {
             this.toimijaKayttaja = (Toimija) this.ohjelmanKayttaja;
             ylapaneeli = new YlaPaneeli(this.toimijaKayttaja);
@@ -83,7 +79,6 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
             case "Päivitä":
                 ;
                 if (asiakasKayttaja != null) {
-                    System.out.println("kutsu kuultu");
                     ylapaneeli.merkkipaneeli.asetaSuosikitPaneeliin(this.asiakasKayttaja,
                             ylapaneeli.karttapaneeli.paivitaJaHaeKartta());
                     infoPaneeli.paivitaInfo();
@@ -116,7 +111,7 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
             tekstialue = new JTextArea("Suosikkisi alueella:");
             scrollAlue = new JScrollPane(tekstialue);
             tekstialue.setEditable(false);
-            scrollAlue.setBounds(new Rectangle(new Dimension(50, ylapaneeli.getHeight())));
+            scrollAlue.setBounds(new Rectangle(new Dimension(150, ylapaneeli.getHeight())));
             scrollAlue.setBorder(infonReuna);
             this.add(scrollAlue, "Center");
             this.paivitaInfo();
@@ -129,10 +124,8 @@ public class OhjelmaIkkuna extends JFrame implements ActionListener {
          * kuvauksineen ja numeroineen.
          */
         public void paivitaInfo() {
-            System.out.println("päivitä info:");
-            tekstialue.setText("Suosikkisi alueella:\n");
+            tekstialue.setText("Suosikkisi tämän karttakuvan alueella:\n");
             for (SuosikkiLahella lahiKiska : ylapaneeli.merkkipaneeli.suosikitLahella) {
-                System.out.println("lähellä: " + lahiKiska.getNimi()); //test
                 tekstialue.append(lahiKiska.getNumeroListalla() + ". : ");
                 tekstialue.append(lahiKiska.getNimi() + "\n");
                 tekstialue.append(lahiKiska.getKuvaus() + "\n\n");

@@ -18,7 +18,12 @@ public class Toimijat implements Serializable {
 
     private static Set<Toimija> toimijat = new HashSet();
 
-    
+    /**
+     * Metodi tutkii onko toimijan nimeä tai käyttäjätunnusta jo tallennettuna.
+     *
+     * @return käyttäjätunnuksen tai nimen mukaisen Toimijan, tai null-arvon jos
+     * käyttäjätunnusta tai nimeä ei löydy.
+     */
     public static Toimija toimijanTiedotOlemassa(String tunnus, String nimi) {
         for (Toimija t : toimijat) {
             if (t.getTunnus().equals(tunnus) || t.getNimi().equals(nimi)) {
@@ -27,10 +32,15 @@ public class Toimijat implements Serializable {
         }
         return null;
     }
-    
-    /**Metodi tutkii onko toimijaa jo tallennettuna, jos on, palauttaa kyseisen Toimijan. Palauttaa 
-     * nullin jos käyttäjätunnusta ei löydy.*/
-    public static Toimija toimijaTunnusOlemassa(String tunnus) {
+
+    /**
+     * Metodi tutkii onko toimijaa jo tallennettuna, jos on, palauttaa kyseisen
+     * Toimijan.
+     *
+     * @return käyttäjätunnuksen mukaisen Toimijan, tai null-arvon jos
+     * käyttäjätunnusta ei löydy.
+     */
+    public static Toimija toimijanTiedotOlemassa(String tunnus) {
         for (Toimija t : toimijat) {
             if (t.getTunnus().equals(tunnus)) {
                 return t;
@@ -39,10 +49,12 @@ public class Toimijat implements Serializable {
         return null;
     }
 
-     /** Metodi lisää toimijan kokoelmaan. 
-     * * Palauttaa false:n jos toimija on jo listalla.**/
+    /**
+     * Metodi lisää toimijan kokoelmaan.
+     *
+     * @return false jos toimija on jo listalla eikä lisäys onnistu.
+     */
     public static boolean lisaa(Toimija t) {
-        //pitaiskö heittää oma poikkeus jos ei onnistu?
         if (toimijat.add(t)) {
             return true;
         } else {
@@ -50,8 +62,11 @@ public class Toimijat implements Serializable {
         }
     }
 
-        /** Metodi poistaa toimijan kokoelmasta. Palauttaa true:n jos toimija löytyy kokoelmasta
-     * * ja poisto onnistuu. **/
+    /**
+     * Metodi poistaa toimijan kokoelmasta.
+     *
+     * @return true jos toimija löytyy kokoelmasta ja poisto onnistuu.
+     */
     public static boolean poista(Toimija p) {
         if (toimijat.remove(p)) {
             return true;
@@ -59,11 +74,9 @@ public class Toimijat implements Serializable {
             return false;
         }
     }
-    
+
     public static Set<Toimija> kaikkiToimijat() {
         return toimijat;
     }
-
-
 
 }

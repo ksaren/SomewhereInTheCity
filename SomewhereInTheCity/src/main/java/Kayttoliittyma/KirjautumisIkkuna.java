@@ -18,7 +18,8 @@ import javax.swing.*;
 
 /**
  * Luokka joka sisältää graafisen kirjautumisikkunan. Onnistunut kirjautuminen
- * on edellytys varsinaisen ohjelmaikkunan avaamiselle.
+ * on edellytys varsinaisen ohjelmaikkunan avaamiselle. Luokan main-metosi vastaa samalla koko 
+ * ohjelman suorituksesta.
  *
  * @author kaisa
  */
@@ -77,8 +78,7 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
             case "Kirjaudu":
                 alanappi.setVisible(false);
                 kTunnus = kirjautumisTekstikentta.getText();
-                k = toimijaTunnusOlemassa(kTunnus);
-                System.out.println("käyttäjäolio luotu");
+                k = toimijanTiedotOlemassa(kTunnus);
                 if (k == null) {
                     k = asiakasTunnusOlemassa(kTunnus);
                 }
@@ -106,15 +106,13 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                 }
             case "Käynnistä ohjelma":
                 tunnistusOK = true;
-                //suljetaan kirjautumisikkuna (ja kutsutaan GUIta main-ohjelmassa)
                 this.setVisible(false);
-                OhjelmaIkkuna.gui(this.k);
+                OhjelmaIkkuna.gui(this.k); // <-- Ohjelman käynnistys!
                 break;
 
             case "Uusi käyttäjä?":
                 alanappi.setVisible(false);
                 kTunnus = kirjautumisTekstikentta.getText();
-                //Jos käyttäjä painoi samantien nappia:
                 if (kTunnus.equals("")) {
                     this.kirjoita("Syötä haluamasi käyttäjätunnus:");
                 }
@@ -165,6 +163,7 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                         this.kirjoita("Tilin luonti ei onnistunut. Joko salasanat eivät täsmää, tai nimi, "
                                 + "käyttäjätunnus tai salasana on jo käytössä.");
                         this.muutaNappi("Alkuun");
+                        this.kirjautumisTekstikentta.setVisible(false);
                         break;
                     }
                     this.kirjoita("Tunnukset luotu. Kirjaudu nyt sisään.");
@@ -174,6 +173,7 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                 break;
             case "Alkuun":
                 alanappi.setVisible(true);
+                kirjautumisTekstikentta.setVisible(true);
                 this.kirjoita("Käyttäjätunnus:");
                 this.muutaNappi("Kirjaudu");
                 break;
@@ -215,10 +215,6 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    private void virheIlmo(String virhe) {
-        JOptionPane.showMessageDialog(this, virhe);
-    }
-
     public static void main(String[] args) {
         luoMalliAsiakkaat();
         luoMalliToimijat();
@@ -230,13 +226,3 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
         });
     }
 }
-/*WindowStateListener ikkunaVahti = new WindowStateListener() {
-
- @Override
- public void windowStateChanged(WindowEvent e) {
- if (l.isVisible() == false) {
-                    
- } else 
-                    
- }
- };*/

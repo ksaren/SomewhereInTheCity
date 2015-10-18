@@ -10,7 +10,6 @@ import Sijainti.Kartta;
 import com.google.maps.model.LatLng;
 import java.awt.Point;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
@@ -21,11 +20,19 @@ public class SuosikkiLahella {
 
     private JLabel suosikkiLabel;
     private int numero;
+    /** Kenttä johon tallennetaan piste, johon suosikkiLabel sijoitetaan merkkipaneelissa.
+     */
     private Point sijaintiKuvassa;
+    /** Kenttä jossa on toimijan maantieteellinen sijainti pituus- ja leveyspiireissä.
+     */
     private LatLng maantSijainti;
+    /** Kenttä joka toimii viitteenä kyseisellä hetkellä käytössä olevaan karttakuvaan.
+     */
     private Kartta karttaNyt;
     private ImageIcon suosikkiIkoni;
     private Toimija suosikkiToimija;
+    /** Kenttä joka säilöö vakiota koorditaattien vaihtamiseksi pikseleihin.
+     */
     private final double pixKoordRatio;
     
  
@@ -43,14 +50,21 @@ public class SuosikkiLahella {
             "Sijaintimerkki varustettuna sydämellä.");
     }
     
+    /** Metodi joka rakentaa JLabelin kuvaamaan toimijan sijainti. Markkeri koostuu kuvasta ja
+     * numeroviitteestä.
+     */
     protected void rakennaLabel() {
         suosikkiLabel = new JLabel(Integer.toString(this.numero),
                         this.suosikkiIkoni, JLabel.CENTER);
         suosikkiLabel.setOpaque(false);
     }
 
+    /** Metodi joka määrittää markkerin sijainnin merkkipaneelissa.
+     * 
+     * @param koord
+     * @return sijaintia kuvaava Point-olio 
+     */
     protected Point maaritaKuvaan(LatLng koord) {
-        
         this.sijaintiKuvassa = new Point((int) Math.round((koord.lng - karttaNyt.getLansiraja()) * this.pixKoordRatio),
                 (int) Math.round((karttaNyt.getPohjoisraja() - koord.lat) * this.pixKoordRatio));
         return this.sijaintiKuvassa;

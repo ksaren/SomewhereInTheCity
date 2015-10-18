@@ -5,13 +5,12 @@
  */
 package Kayttajat;
 
-import static Kayttajat.Toimijat.toimijaTunnusOlemassa;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Määrittelee asiakkaan ja tarjoaa tarvittavat asiakkaan lisäominaisuudet,
- * kuten suosikkien tallentamisen.
+ * Luokka joka määrittelee asiakkaan ja tarjoaa tarvittavat asiakkaan
+ * lisäominaisuudet, kuten suosikkien tallentamisen.
  *
  * @author kaisa
  */
@@ -25,15 +24,18 @@ public class Asiakas extends Kayttaja {
             throws AlreadyDefinedException {
         super(nimi, tunnus, salasana, uudSalasana);
         if (asiakkaat.asiakasTunnusOlemassa(this.getTunnus()) == null) {
-                asiakasListalle(this);
-                System.out.println("Asiakas lisatty.");//testaus
-                this.setNro(seuraavaKayttaja());
+            asiakasListalle(this);
+            this.setNro(seuraavaKayttaja());
         } else {
             throw new AlreadyDefinedException("Asiakas on jo listalla.");
         }
 
     }
-    /** Metodi jolla asiakas voi tallentaa suosikkitoimijoitaan. Palauttaa epätoden jos suosikki on jo listalla.**/
+
+    /**
+     * Metodi jolla asiakas voi tallentaa suosikkitoimijoitaan. Palauttaa
+     * epätoden jos suosikki on jo * listalla.
+     */
     public boolean setSuosikki(Toimija lemppari) {
         if (this.suosikit.add(lemppari) && lemppari != null) {
             return true;
@@ -41,12 +43,14 @@ public class Asiakas extends Kayttaja {
             return false;
         }
     }
-    
+
     public Set<Toimija> getSuosikit() {
         return this.suosikit;
     }
-    
-    /** Luokkametodi jolla lisätään asiakas asiakkaat-joukkoon ja kasvattaa käyttäjälaskuria yhdellä.
+
+    /**
+     * Luokkametodi jolla lisätään asiakas asiakkaat-joukkoon ja kasvattaa
+     * käyttäjälaskuria yhdellä.
      */
     public static boolean asiakasListalle(Asiakas uusiAsiakas) {
         if (asiakkaat.lisaa(uusiAsiakas)) {
@@ -56,18 +60,21 @@ public class Asiakas extends Kayttaja {
             return false;
         }
     }
-    /** Luokkametodi jolla poistetaan asiakas asiakkaat-joukosta.
+
+    /**
+     * Luokkametodi jolla poistetaan asiakas asiakkaat-joukosta.
      */
     public static boolean poistaAsiakas(Asiakas poistettava) {
         if (asiakkaat.poista(poistettava)) {
-            System.out.println("Toimija " + poistettava + " poistettu");
             return true;
         } else {
             return false;
         }
     }
-    /** Luokkametodi jolla voi ohjelman alussa luoda malliasiakkaita 
-     * ohjelman testikäyttöä varten.
+
+    /**
+     * Luokkametodi jolla voi ohjelman alussa luoda malliasiakkaita ohjelman
+     * testikäyttöä varten.
      */
     public static boolean luoMalliAsiakkaat() {
         boolean ok = true;
@@ -81,6 +88,5 @@ public class Asiakas extends Kayttaja {
         }
         return ok;
     }
-   
 
 }

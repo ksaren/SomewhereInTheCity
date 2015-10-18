@@ -14,7 +14,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-/**
+/** Luokka joka vastaa yrityskäyttäjän tarvitsemista hallintavälineistä paneelissa. Mahdollistaa 
+ * toimijan tilan muuttamisen ja promotekstin asettamisen.
  *
  * @author kaisa
  */

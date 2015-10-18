@@ -5,12 +5,13 @@
  */
 package Kayttajat;
 
-/** Poikkeus jolla käsitellään tilanne kun käyttäjä on jo entuudestaan listalla.
+/**
+ * Poikkeus jolla käsitellään tilanne kun käyttäjä on jo entuudestaan listalla.
  *
  * @author kaisa
  */
 public class AlreadyDefinedException extends RuntimeException {
-    
+
     public AlreadyDefinedException(String viesti) {
         super(viesti);
     }

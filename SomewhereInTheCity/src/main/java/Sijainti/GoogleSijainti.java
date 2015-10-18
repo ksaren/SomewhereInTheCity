@@ -12,7 +12,7 @@ package Sijainti;
  *
  * @author kaisa
  */
-import com.google.maps.*;
+
 import com.google.maps.model.LatLng;
 import java.util.HashMap;
 import java.util.Random;
@@ -40,7 +40,6 @@ public class GoogleSijainti {
         this.luoRandomSijainnit();
         this.arvoOmaSijainti();
         } catch (Exception e) {
-            System.out.println("Poikkeus: " + e);
         }
     }
 
@@ -76,7 +75,6 @@ public class GoogleSijainti {
                     = randomLongitudi[arpoja.nextInt(randomLongitudi.length)];
             return true;
         } catch (Exception e) {
-            System.out.println("Sijainnin arvonta ei onnistunut");
             return false;
         }
     }
@@ -126,14 +124,5 @@ public class GoogleSijainti {
         return this.omaSijainti;
     }
 
-    //testailuun, poistetaan lopuksi!
-    public static void main(String[] args) {
-        GoogleSijainti gs = new GoogleSijainti();
-        System.out.println(gs.getKoordinaatit());
-        for (int i = 0; i < 30; i++) {
-            System.out.println(gs.randomLatitudi[10]);
-            System.out.println(gs.randomLongitudi[15]);
-        }
 
-    }
 }

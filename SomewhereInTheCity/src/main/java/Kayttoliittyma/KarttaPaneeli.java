@@ -25,12 +25,16 @@ public class KarttaPaneeli extends JPanel {
         this.setPreferredSize();
     }
 
+    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(karttaKuva.getKartta(), 0, 0, null);
     }
 
+    /**  Metodi asettaa komponentin koon karttakuvan koon kanssa samaksi.
+     * 
+     */
     public void setPreferredSize() {
         super.setPreferredSize(new Dimension(karttaKuva.getKartta()
                 .getWidth(null), karttaKuva.getKartta().getHeight(null)));
