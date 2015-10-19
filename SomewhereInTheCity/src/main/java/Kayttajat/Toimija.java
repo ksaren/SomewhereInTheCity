@@ -55,7 +55,6 @@ public class Toimija extends Kayttaja {
      */
     public static boolean poistaToimija(Toimija poistettava) {
         if (toimijat.poista(poistettava)) {
-            System.out.println("Toimija " + poistettava.getNimi() + " poistettu");
             return true;
         } else {
             return false;

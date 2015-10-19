@@ -40,7 +40,6 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
     String salasana;
     String uudSalasana;
     boolean ruokatoimija;
-    boolean tunnistusOK = false;
 
     public KirjautumisIkkuna() {
         this.setLayout(new BorderLayout());
@@ -105,7 +104,6 @@ public class KirjautumisIkkuna extends JFrame implements ActionListener {
                     break;
                 }
             case "Käynnistä ohjelma":
-                tunnistusOK = true;
                 this.setVisible(false);
                 OhjelmaIkkuna.gui(this.k); // <-- Ohjelman käynnistys!
                 break;

@@ -22,33 +22,56 @@ public class ToimijaTest {
     @Test
     public void konstruktoriTest() {
         tp = new Toimija("FineFillari", "fifi", "dining", "dining");
-        assertEquals("FineFillari",tp.getNimi());
+        assertEquals("FineFillari", tp.getNimi());
     }
 
     @Before
     public void setUp() {
         tm = new Toimija("Testaamo", "tm", "password", "password");
     }
-    
+
     @After
     public void tearDown() {
         poistaToimija(tm);
         poistaToimija(tr);
+        poistaToimija(tp);
         tm = null;
         tr = null;
     }
-    
+
     @Test
     public void toimijaOnJoListallaTest() {
-         tr = new Toimija("Kallen Kahvila", "fressi", "tosihyva", "tosihyva");
-         System.out.println("tr luotu");
+        tr = new Toimija("Kallen Kahvila", "fressi", "tosihyva", "tosihyva");
         assertEquals(toimijaListalle(tr), false);
     }
-    
-       public void yksiLisaaAsiakkailla() {
+
+    @Test
+    public void yksiLisaaAsiakkaillaTest() {
         tr = new Toimija("Kallen Kahvila", "fressi", "tosihyva", "tosihyva");
-        assertEquals(tm.getNro(), tr.getNro()-1);
+        assertEquals(tm.getNro(), tr.getNro() - 1);
     }
     
-
+    @Test
+    public void setKuvausTest() {
+        tm.setKuvaus("");
+        assertEquals("",tm.getKuvaus());
+    }
+    
+    @Test
+    public void setKuvausLisaaRivinvaihdon() {
+        tm.setKuvaus("qwertyuiopasdfghjklzxcvbnmqwertyuiopasdf");
+        assertEquals("qwertyuiopasdfghjklzxcvbnmqwertyuio\npasdf",tm.getKuvaus());
+    }
+    
+    @Test
+    public void aukiVaiEiTest() {
+        tm.setStatus(true);
+        assertTrue(tm.getStatus());
+    }
+    
+    @Test
+    public void toStringTest() {
+        String TM = tm + "";
+        assertEquals(TM, tm.getNimi());
+    }
 }

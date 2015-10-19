@@ -11,8 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+
 
 /**
  * Luokka joka tallentaa senhetkisen sijainnin mukaisen kartan kuvana. Omistaa
@@ -43,6 +42,7 @@ public class Kartta {
             this.sijainti = new GoogleSijainti();
             this.paivitaKartta();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -73,13 +73,10 @@ public class Kartta {
      * @return Sivuosoite merkkijonona URL-oliota varten.
      */
     public String setURL(LatLng koordinaatit) {
-        String Lat, Lon;
         try {
-            Lat = Double.toString(koordinaatit.lat);
-            Lon = Double.toString(koordinaatit.lng);
             return URLalku + koordinaatit.toString() + URLloppu;
         } catch (Exception e) {
-            return "Virhe";
+            return "Virhe: " + e;
         }
     }
 

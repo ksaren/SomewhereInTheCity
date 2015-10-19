@@ -117,4 +117,46 @@
 - Finally got the map on JLayeredPane :) The merkkipaneeli on top of it still doesn't show the markers.
 - Some updates to class diagrams.
 
+-------------------
+**6th Deadline**
+- Total time **88h** this far (+20h)
+-------------------
 
+**Oct 12, 2015**
+- Time: 6h
+- Getting the program ready to be shown on demo tomorrow. Merkkipaneeli is still not visible.
+
+**Oct 13, 2015**
+- Time: 8h
+- Demo, debugging and solving problems
+
+**Oct 14, 2015**
+- Time: 2h
+- More debugging
+
+**Oct 15, 2015**
+- Time: 3h
+- got the first marker to merkkipaneeli (my own in the middle)!!!
+
+**Oct 16, 2015**
+- Time: 8h
+- Debugging the suosikkiLahella-class, the key problem...
+
+**Oct 17, 2015**
+- Time: 5h
+- It's working, everything, finally :)
+
+**Oct 18, 2015**
+- Time: 3h
+- Removing unused code, writing javadoc
+
+**Oct 19, 2015 (extra day)**
+- Time: 8h
+- Drawing class diagrams, sequencechart and writing some tests (many of old ones were removed since I didn't use the tested code in program). Writing manuals and reports.
+
+----------------------
+----------------------
+**7th FINAL Deadline**
+- Total time **132h** (+44h)
+----------------------
+----------------------

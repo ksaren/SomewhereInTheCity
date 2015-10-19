@@ -11,12 +11,8 @@ import Kayttajat.Toimijat;
 import static Kayttajat.Toimijat.kaikkiToimijat;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import javax.swing.*;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.text.DefaultCaret;
 
 /**Käyttöliittymän asiakkaan toimintoja ohjaava paneeli. Mahdollistaa suosikkitoimijoiden hallinnan.
  *

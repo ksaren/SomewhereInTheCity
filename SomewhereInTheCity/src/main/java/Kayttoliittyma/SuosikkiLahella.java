@@ -20,68 +20,73 @@ public class SuosikkiLahella {
 
     private JLabel suosikkiLabel;
     private int numero;
-    /** Kenttä johon tallennetaan piste, johon suosikkiLabel sijoitetaan merkkipaneelissa.
+    /**
+     * Kenttä johon tallennetaan piste, johon suosikkiLabel sijoitetaan
+     * merkkipaneelissa.
      */
     private Point sijaintiKuvassa;
-    /** Kenttä jossa on toimijan maantieteellinen sijainti pituus- ja leveyspiireissä.
+    /**
+     * Kenttä jossa on toimijan maantieteellinen sijainti pituus- ja
+     * leveyspiireissä.
      */
     private LatLng maantSijainti;
-    /** Kenttä joka toimii viitteenä kyseisellä hetkellä käytössä olevaan karttakuvaan.
+    /**
+     * Kenttä joka toimii viitteenä kyseisellä hetkellä käytössä olevaan
+     * karttakuvaan.
      */
     private Kartta karttaNyt;
     private ImageIcon suosikkiIkoni;
     private Toimija suosikkiToimija;
-    /** Kenttä joka säilöö vakiota koorditaattien vaihtamiseksi pikseleihin.
+    /**
+     * Kenttä joka säilöö vakiota koorditaattien vaihtamiseksi pikseleihin.
      */
     private final double pixKoordRatio;
-    
- 
-        
-    
 
     public SuosikkiLahella(int nro, Kartta kartta, LatLng sijainti, Toimija lemppari) {
         this.suosikkiToimija = lemppari;
         this.numero = nro;
         this.karttaNyt = kartta;
         this.maantSijainti = new LatLng(sijainti.lat, sijainti.lng);
-        this.pixKoordRatio = karttaNyt.getKartta().getWidth()/(karttaNyt.getItaraja()-karttaNyt.getLansiraja())
-                ;
-        this.suosikkiIkoni = new ImageIcon("sydanpinni.png",
-            "Sijaintimerkki varustettuna sydämellä.");
+        this.pixKoordRatio = karttaNyt.getKartta().getWidth()
+                / (karttaNyt.getItaraja() - karttaNyt.getLansiraja());
+        this.suosikkiIkoni = new ImageIcon("sydanpinni.png");
+
     }
-    
-    /** Metodi joka rakentaa JLabelin kuvaamaan toimijan sijainti. Markkeri koostuu kuvasta ja
-     * numeroviitteestä.
+
+    /**
+     * Metodi joka rakentaa JLabelin kuvaamaan toimijan sijainti. Markkeri
+     * koostuu kuvasta ja numeroviitteestä.
      */
     protected void rakennaLabel() {
         suosikkiLabel = new JLabel(Integer.toString(this.numero),
-                        this.suosikkiIkoni, JLabel.CENTER);
+                this.suosikkiIkoni, JLabel.CENTER);
         suosikkiLabel.setOpaque(false);
     }
 
-    /** Metodi joka määrittää markkerin sijainnin merkkipaneelissa.
-     * 
+    /**
+     * Metodi joka määrittää markkerin sijainnin merkkipaneelissa.
+     *
      * @param koord
-     * @return sijaintia kuvaava Point-olio 
+     * @return sijaintia kuvaava Point-olio
      */
     protected Point maaritaKuvaan(LatLng koord) {
         this.sijaintiKuvassa = new Point((int) Math.round((koord.lng - karttaNyt.getLansiraja()) * this.pixKoordRatio),
                 (int) Math.round((karttaNyt.getPohjoisraja() - koord.lat) * this.pixKoordRatio));
         return this.sijaintiKuvassa;
     }
-    
+
     public JLabel getSuosikkiLabel() {
         return this.suosikkiLabel;
     }
-    
+
     public int getNumeroListalla() {
         return this.numero;
     }
-    
+
     public LatLng getMaantieteellinenSijainti() {
         return this.maantSijainti;
     }
-    
+
     public Point getSijaintiKuvassa() {
         return this.sijaintiKuvassa;
     }
@@ -93,13 +98,13 @@ public class SuosikkiLahella {
     public String getNimi() {
         return this.suosikkiToimija.getNimi();
     }
-    
+
     public int getLabelinLeveys() {
         return this.suosikkiLabel.getWidth();
     }
-    
+
     public int getLabelinKorkeus() {
         return this.suosikkiLabel.getHeight();
     }
- 
+
 }

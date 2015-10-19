@@ -6,16 +6,18 @@
 package Kayttoliittyma;
 
 import Kayttajat.Asiakas;
-import Kayttajat.Kayttaja;
 import Kayttajat.Toimija;
 import Sijainti.Kartta;
 
 import com.google.maps.model.LatLng;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -54,7 +56,7 @@ public class YlaPaneeli extends JLayeredPane {
         this.setLayout(layout);
         karttapaneeli = new KarttaPaneeli();
         this.setPreferredSize(karttapaneeli.getMapSize());
-        merkkipaneeli = new MerkkiPaneeli(karttapaneeli.getMapSize());
+            merkkipaneeli = new MerkkiPaneeli(karttapaneeli.getMapSize());
         this.add(karttapaneeli, JLayeredPane.DEFAULT_LAYER);
         this.add(merkkipaneeli, JLayeredPane.PALETTE_LAYER);
         layout.setBounds(karttapaneeli, new Rectangle(karttapaneeli.getPreferredSize()));
@@ -88,11 +90,12 @@ public class YlaPaneeli extends JLayeredPane {
             this.setOpaque(false);
             this.setSize(kartanKoko);
             this.suosikitLahella = new ArrayList();
-            this.omaPaikkaIkoni = new ImageIcon("tyyppipinni.png",
-                    "Sijaintimerkki varustettuna ihmisen kuvalla.");
+
+            this.omaPaikkaIkoni = new ImageIcon("tyyppipinni.png");
+            this.omaLabel = new JLabel(this.omaPaikkaIkoni);
+
             int labelY = (int) Math.round(kartanKoko.getHeight() / 2);
             int labelX = (int) Math.round((kartanKoko.getWidth()) / 2);
-            this.omaLabel = new JLabel(this.omaPaikkaIkoni);
             this.labelinKoko = omaLabel.getPreferredSize();
             this.omaLabel.setBounds(labelX, labelY, labelinKoko.width, labelinKoko.height);
             this.add(omaLabel);
@@ -106,8 +109,7 @@ public class YlaPaneeli extends JLayeredPane {
             this.setOpaque(false);
             this.setSize(kartanKoko);
             this.suosikitLahella = new ArrayList();
-            this.omaPaikkaIkoni = new ImageIcon("tyyppipinni.png",
-                    "Sijaintimerkki varustettuna ihmisen kuvalla.");
+            this.omaPaikkaIkoni = new ImageIcon("tyyppipinni.png");
             this.asetaOmaLabel();
 
         }
@@ -123,7 +125,8 @@ public class YlaPaneeli extends JLayeredPane {
             super.setPreferredSize(kartanKoko);
         }
 
-        /** Metodi joka asettaa omaa sijaintia kuvaavan markkerin kuvan keskelle.
+        /**
+         * Metodi joka asettaa omaa sijaintia kuvaavan markkerin kuvan keskelle.
          */
         public void asetaOmaLabel() {
             int labelY = (int) Math.round(kartanKoko.getHeight() / 2);
@@ -133,7 +136,7 @@ public class YlaPaneeli extends JLayeredPane {
             this.omaLabel.setBounds(labelX, labelY, labelinKoko.width, labelinKoko.height);
             this.add(omaLabel);
         }
-        
+
         /**
          * Metodi joka tutkii onko asiakkaan suosikkitoimijoita kartan alueella
          * ja jos on, asettaa kartalle markkerin vastaavalle paikalle.*
@@ -222,9 +225,9 @@ public class YlaPaneeli extends JLayeredPane {
         }
     }
 
-
-    /**JLayeredPanen tueksi rakennettu oma layout-manager.
-    */
+    /**
+     * JLayeredPanen tueksi rakennettu oma layout-manager.
+     */
     public static class AbsoluteLayoutManager implements LayoutManager {
 
         private Map<Component, Rectangle> rajat = new LinkedHashMap<Component, Rectangle>();
